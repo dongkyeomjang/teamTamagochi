@@ -43,7 +43,8 @@
 
 
 # 클래스 다이어그램
-<img width="893" alt="image" src="https://github.com/dongkyeomjang/teamTamagochi/assets/86873281/9a3d42c3-55b2-4f16-b4ee-cc79b31266a6">
+<img width="926" alt="image" src="https://github.com/dongkyeomjang/teamTamagochi/assets/86873281/0e679ff1-d295-4cbf-8ca3-ce0eeeacc301">
+
 
 
 
