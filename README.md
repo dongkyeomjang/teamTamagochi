@@ -31,7 +31,8 @@
 
 
 # 클래스 다이어그램
-<img width="878" alt="image" src="https://github.com/dongkyeomjang/teamTamagochi/assets/86873281/6c58ba17-a76d-4998-9106-26491021b228">
+<img width="893" alt="image" src="https://github.com/dongkyeomjang/teamTamagochi/assets/86873281/9a3d42c3-55b2-4f16-b4ee-cc79b31266a6">
+
 
 
 
