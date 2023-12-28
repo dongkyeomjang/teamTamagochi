@@ -1,5 +1,17 @@
 # teamTamagochi
-팀 다마고치의 레포지토리입니다.
+
+어릴적 추억에 머물러있던 다마고치를, 죽지 않게 잘 키워보자!
+
+팀원: 맹인호 박상민 장동겸 최혜빈 현세미
+
+# 프로젝트 설명
+사용자는 본인의 캐릭터를 생성할 수 있으며<br>
+생존 시간에 따라 레벨업을 하며 성장하는 캐릭터가 최대한 오래 살아남을 수 있도록 '밥을 주고','잠을 재우고','똥을 치워주며' 연명시킨다.
+
+#UI
+<br>
+<img width="346" alt="DamagochiMockup" src="https://github.com/dongkyeomjang/teamTamagochi/assets/86873281/6291ae4d-6624-4f13-9e22-dbe7e5c8b94b">
+<img width="351" alt="DamagochiUI2" src="https://github.com/dongkyeomjang/teamTamagochi/assets/86873281/3cd0cf3b-38a3-4e63-b986-80d6b1cf06e2">
 
 # GitHub Role
 다음과 같은 Convetion을 따릅니다.
