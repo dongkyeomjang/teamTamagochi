@@ -29,16 +29,16 @@ public class Tamagochi extends Drawable{
 
     public Tombstone dieByEat(String causeOfDeath){
         // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstone.png",causeOfDeath);
+        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
     }
     public Tombstone dieBySleep(String causeOfDeath){
         // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstone.png",causeOfDeath);
+        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
     }
 
     public Tombstone dieByPoop(String causeOfDeath){
         // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstone.png",causeOfDeath);
+        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
     }
 
     //-------------------------getter, setter-------------------------
@@ -65,5 +65,8 @@ public class Tamagochi extends Drawable{
     }
     public String getNickname() {
         return nickname;
+    }
+    public String getImgURL() {
+        return super.getImgURL();
     }
 }

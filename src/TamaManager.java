@@ -15,7 +15,7 @@ public class TamaManager {
     }
     public void createTama(String nickname){
         int x=50, y=50, size=50;
-        tama = new Tamagochi(x, y, size, "src/img/tama.png", nickname);
+        tama = new Tamagochi(x, y, size, "src/img/tamagochiImg.png", nickname);
     }
     public void feed(){
         Random random= new Random();
@@ -50,14 +50,28 @@ public class TamaManager {
             tombstones.add(tama.dieByPoop("똥독 올라 죽음"));
         }
     }
-    private void gettingHungry(){
+    public void gettingHungry(){
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '10초'마다 포만감을 1씩 감소시킨다.
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
+        tama.setSatiety(tama.getSatiety()-1);
+        if(tama.getSatiety() <= 0){
+            tombstones.add(tama.dieByEat("배고파서 죽음"));
+        }
     }
-    private void gettingSleepy(){
+    public void gettingSleepy() {
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '20초'마다 피로도를 1씩 증가시킨다.
         // 만약 피로도가 10이 넘어가면, 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
         // 피로도가 15에 도달하면 그냥 dieBySleep() 호출. 즉 피로도가 15가 되면 죽음.
+        tama.setFatigue(tama.getFatigue() + 1);
+        if (tama.getFatigue() >= 10) {
+            if (tama.getFatigue() == 15) {
+                tombstones.add(tama.dieBySleep("피곤에 찌들어 죽"));
+            } else if (Math.random() < 0.4) {
+                tombstones.add(tama.dieBySleep("피곤해서 죽음"));
+            }
+        }
     }
-
+    public Tamagochi getTama(){
+        return tama;
+    }
 }
