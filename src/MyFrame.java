@@ -52,14 +52,19 @@ public class MyFrame extends JFrame {
         actionListener = e -> {
             if(e.getSource() == eatButton){
                 tamaManager.feed();
+                satietyBar.setValue(tamaManager.getTama().getSatiety());
+                System.out.println("밥먹음");
                 repaint();
             }
             else if(e.getSource() == sleepButton){
                 tamaManager.sleep();
+                fatigueBar.setValue(tamaManager.getTama().getFatigue());
+                System.out.println("잠잠");
                 repaint();
             }
             else if(e.getSource() == cleanButton){
                 tamaManager.clean();
+                System.out.println("청소");
                 repaint();
             }
         };
@@ -71,7 +76,7 @@ public class MyFrame extends JFrame {
         menuPanel.add(sleepButton);
         menuPanel.add(cleanButton);
         // menuPanel을 하단에 배치
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 0;
         gbc.weighty = 0;
@@ -82,6 +87,7 @@ public class MyFrame extends JFrame {
         //namePanel 구성 요소 생성 및 배치
         namePanel = new JPanel();
         // namePanel을 상단에 배치
+        gbc.gridy=1;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
@@ -92,7 +98,7 @@ public class MyFrame extends JFrame {
         //gagePanel 구성 요소 생성 및 배치
         gagePanel = new JPanel();
         // gagePanel을 namePanel 아래에 배치
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gagePanel.setOpaque(false);
         add(gagePanel, gbc);
         // 포만감 게이지 초기화 및 설정
@@ -123,7 +129,7 @@ public class MyFrame extends JFrame {
         characterPanel.add(poopPanel);
         characterPanel.add(tombstonePanel);
         // characterPanel을 gagePanel 아래, menuPanel 위에 배치
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.weighty = 0.01; // 필요한 공간만큼만 할당
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
@@ -131,6 +137,22 @@ public class MyFrame extends JFrame {
 
         repaint();
         setVisible(true);
+    }
+    public void start(){
+        // hungryTimer 생성 및 시작
+        hungryTimer = new Timer(10000, e -> {
+            tamaManager.gettingHungry();
+            satietyBar.setValue(tamaManager.getTama().getSatiety());
+            repaint();
+        });
+        hungryTimer.start();
+        // sleepyTimer 생성 및 시작
+        sleepyTimer = new Timer(20000, e -> {
+            tamaManager.gettingSleepy();
+            fatigueBar.setValue(tamaManager.getTama().getFatigue());
+            repaint();
+        });
+        sleepyTimer.start();
     }
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;
