@@ -3,6 +3,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class MyFrame extends JFrame {
@@ -17,6 +18,7 @@ public class MyFrame extends JFrame {
     private JPanel namePanel;
     private Timer hungryTimer;
     private Timer sleepyTimer;
+    private Timer poopTimer;    
     private TamaManager tamaManager;
     private ActionListener actionListener;
     private JProgressBar satietyBar;
@@ -153,6 +155,14 @@ public class MyFrame extends JFrame {
             repaint();
         });
         sleepyTimer.start();
+        
+        // poopTimer 생성 및 시작
+        poopTimer = new Timer(2000, e -> { // 2초마다 실행
+            tamaManager.createPoop();
+            repaint();
+        });
+        poopTimer.start(); // 타이머 시작
+
     }
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;
