@@ -1,8 +1,8 @@
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 
 public class MyFrame extends JFrame {
@@ -17,10 +17,12 @@ public class MyFrame extends JFrame {
     private JPanel namePanel;
     private Timer hungryTimer;
     private Timer sleepyTimer;
+    private Tamagochi tama;
     private TamaManager tamaManager;
     private ActionListener actionListener;
     private JProgressBar satietyBar;
     private JProgressBar fatigueBar;
+    
     public MyFrame(){
         super();
 
@@ -54,6 +56,7 @@ public class MyFrame extends JFrame {
                 tamaManager.feed();
                 satietyBar.setValue(tamaManager.getTama().getSatiety());
                 System.out.println("밥먹음");
+                System.out.println(tamaManager.getFood());
                 repaint();
             }
             else if(e.getSource() == sleepButton){
@@ -68,6 +71,7 @@ public class MyFrame extends JFrame {
                 repaint();
             }
         };
+        
         eatButton.addActionListener(actionListener);
         sleepButton.addActionListener(actionListener);
         cleanButton.addActionListener(actionListener);
@@ -138,22 +142,35 @@ public class MyFrame extends JFrame {
         repaint();
         setVisible(true);
     }
-    public void start(){
+    
+    public void start() {
+    	String[] buttons = {"종료", "재실행"};
+    	
+		Random rand = new Random();
         // hungryTimer 생성 및 시작
-        hungryTimer = new Timer(10000, e -> {
+        hungryTimer = new Timer(2000, e -> {
+            if(tamaManager.getState() == 0) {
+            	hungryTimer.stop();
+            	JOptionPane.showOptionDialog(null, "사망", "사망", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttons, "재실행");
+            }
             tamaManager.gettingHungry();
             satietyBar.setValue(tamaManager.getTama().getSatiety());
             repaint();
         });
         hungryTimer.start();
+        
         // sleepyTimer 생성 및 시작
-        sleepyTimer = new Timer(20000, e -> {
+        sleepyTimer = new Timer(5000, e -> {
+            if(tamaManager.getState() == 0) {
+            	sleepyTimer.stop();
+            }
             tamaManager.gettingSleepy();
             fatigueBar.setValue(tamaManager.getTama().getFatigue());
             repaint();
         });
         sleepyTimer.start();
     }
+    
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;
 
