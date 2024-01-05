@@ -84,13 +84,21 @@ public class TamaManager {
     }
     public void createPoop(){
         // poop 생성
-        int x=50, y=50, size=50;
+        Random random = new Random();
+        // 화면 크기에 맞추어 랜덤 좌표 생성 (예시: 화면 크기가 500x500)
+        int x = random.nextInt(450); // 화면 너비에서 poop 크기(50)를 뺀 범위
+        int y = random.nextInt(450); // 화면 높이에서 poop 크기(50)를 뺀 범위
+        
+        int size=50;
         Poop poop = new Poop(x, y, size, "src/img/poop.png");
         poops.add(poop);
         // 만약 poop가 10개라면, Tamagochi의 dieByPoop() 메소드 호출. 즉 poop이 10개가 되면 죽음.
         if(poops.size() >= 10){
             tombstones.add(tama.dieByPoop("똥독 올라 죽음"));
         }
+        System.out.println("똥생성");
+        System.out.println(x);
+        System.out.println(y);
     }
     public void gettingHungry(){
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '10초'마다 포만감을 1씩 감소시킴
