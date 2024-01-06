@@ -153,7 +153,7 @@ public class MyFrame extends JFrame {
     	
 		Random rand = new Random();
         // hungryTimer 생성 및 시작
-        hungryTimer = new Timer(2000, e -> {
+        hungryTimer = new Timer(10000, e -> {
             tamaManager.gettingHungry(hungryTimer, sleepyTimer);
             satietyBar.setValue(tamaManager.getTama().getSatiety());
             repaint();
@@ -161,7 +161,7 @@ public class MyFrame extends JFrame {
         hungryTimer.start();
         
         // sleepyTimer 생성 및 시작
-        sleepyTimer = new Timer(5000, e -> {
+        sleepyTimer = new Timer(20000, e -> {
             tamaManager.gettingSleepy();
             fatigueBar.setValue(tamaManager.getTama().getFatigue());
             repaint();
