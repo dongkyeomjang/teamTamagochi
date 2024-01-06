@@ -1,47 +1,3 @@
-//import java.awt.Graphics;
-//import java.awt.Image;
-//import java.awt.Toolkit;
-//import java.sql.Timestamp;
-//
-//public class Tamagochi extends Drawable {
-//	
-//	private int satiety;
-//	private int fatigue;
-//	private int level;
-//	private Timestamp createTime;
-//	private String nickname;
-//
-//	public Tamagochi(int x, int y, int size, String imgURL) {
-//		super(x, y, size, imgURL);
-//		this.satiety = 10;
-//		this.fatigue = 0;
-//		this.level = 1;
-//	}
-//
-//	@Override
-//	public void display(Graphics g) {
-//      Image img = Toolkit.getDefaultToolkit().getImage(getImgURL());
-//      g.drawImage(img, getX(), getY(), getSize(), getSize(), null);
-//	}
-//	
-//	public Tombstone dieByEating(String causeOfDeath) {
-//		if(satiety == 15) {
-//			return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png", causeOfDeath);
-//		}
-//		
-//		return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png", causeOfDeath);
-//	}
-//
-//	public int getSatiety() {
-//		return satiety;
-//	}
-//
-//	public void setSatiety(int satiety) {
-//		this.satiety = satiety;
-//	}
-//	
-//}
-
 
 import java.awt.*;
 import java.sql.Timestamp;
@@ -70,16 +26,9 @@ public class Tamagochi extends Drawable{
         g.drawImage(img, getX(), getY(), getSize(), getSize(), null);
     }
 
-//    public Tombstone dieByEating(String causeOfDeath){
-//        // 사인 작성, 비석 생성
-//        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
-//    }
-    
-    public Tombstone dieByEating(String causeOfDeath) {
-    	if(satiety > 10 || satiety < 5) { // 포만감이 10 초과이거나 5 미만일 때 랜덤으로 사망
-    		return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png", causeOfDeath);
-    	}
-    	return null;
+    public Tombstone dieByEating(String causeOfDeath){
+        // 사인 작성, 비석 생성
+        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
     }
     
     public Tombstone dieBySleeping(String causeOfDeath){
