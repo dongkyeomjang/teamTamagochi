@@ -1,17 +1,16 @@
 package src;
-
+import javax.swing.*;
 import java.awt.*;
 import java.sql.Timestamp;
 
 public class Tamagochi extends Drawable{
     private int satiety;
     private int fatigue;
-
-    //poop는 매니저에 넣는게 맞는 것 같아서 뺐음.
     private int level;
 
     private Timestamp createTime;
     private String nickname;
+    private String imgURL;
 
     public Tamagochi(int x, int y, int size, String imgURL, String nickname) {
         super(x, y, size, imgURL);
@@ -27,18 +26,36 @@ public class Tamagochi extends Drawable{
         g.drawImage(img, getX(), getY(), getSize(), getSize(), null);
     }
 
-    public Tombstone dieByEat(String causeOfDeath){
-        // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
+    public Tombstone dieByEat(String causeOfDeath, int tombstoneNum){
+        return switch (tombstoneNum) {
+            case 0 -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 1 -> new Tombstone(110, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 2 -> new Tombstone(202, 250, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 3 -> new Tombstone(294, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 4 -> new Tombstone(374, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            default -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+        };
     }
-    public Tombstone dieBySleep(String causeOfDeath){
-        // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
+    public Tombstone dieBySleep(String causeOfDeath, int tombstoneNum){
+        return switch (tombstoneNum) {
+            case 0 -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 1 -> new Tombstone(110, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 2 -> new Tombstone(202, 250, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 3 -> new Tombstone(294, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 4 -> new Tombstone(374, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            default -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+        };
     }
 
-    public Tombstone dieByPoop(String causeOfDeath){
-        // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
+    public Tombstone dieByPoop(String causeOfDeath, int tombstoneNum){
+        return switch (tombstoneNum) {
+            case 0 -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 1 -> new Tombstone(110, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 2 -> new Tombstone(202, 250, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 3 -> new Tombstone(294, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            case 4 -> new Tombstone(374, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+            default -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
+        };
     }
 
     //-------------------------getter, setter-------------------------
@@ -68,5 +85,8 @@ public class Tamagochi extends Drawable{
     }
     public String getImgURL() {
         return super.getImgURL();
+    }
+    public void setImgURL(String imgURL) {
+        this.imgURL=imgURL;
     }
 }

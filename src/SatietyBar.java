@@ -1,9 +1,10 @@
 package src;
+
 import java.awt.*;
 
-public class Poop extends Drawable {
-    public Poop(int x, int y, int size, String imgURL) {
-        super(x, y, size, imgURL);
+public class SatietyBar extends Drawable {
+    public SatietyBar(int x, int y, int size, String imgURL) {
+        super(x,y,size,imgURL);
     }
     public void display(Graphics g) {
         Image img = Toolkit.getDefaultToolkit().getImage(getImgURL());
