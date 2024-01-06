@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class MyFrame extends JFrame {
@@ -16,6 +17,7 @@ public class MyFrame extends JFrame {
     private JPanel namePanel;
     private Timer hungryTimer;
     private Timer sleepyTimer;
+    private Timer poopTimer;    
     private TamaManager tamaManager;
     private ActionListener actionListener;
     private JProgressBar satietyBar;
@@ -169,9 +171,7 @@ public class MyFrame extends JFrame {
             repaint();
           
         });
-        
-     
-      
+
     }
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;
