@@ -22,7 +22,7 @@ public class Tamagochi extends Drawable{
     }
 
     public void display(Graphics g){
-        Image img = Toolkit.getDefaultToolkit().getImage(getImgURL());
+        Image img = this.imgIcon.getImage();
         g.drawImage(img, getX(), getY(), getSize(), getSize(), null);
     }
 
@@ -82,11 +82,5 @@ public class Tamagochi extends Drawable{
     }
     public String getNickname() {
         return nickname;
-    }
-    public String getImgURL() {
-        return super.getImgURL();
-    }
-    public void setImgURL(String imgURL) {
-        this.imgURL=imgURL;
     }
 }

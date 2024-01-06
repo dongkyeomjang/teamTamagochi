@@ -9,7 +9,7 @@ public class Tombstone extends Drawable{
         this.causeOfDeath = causeOfDeath;
     }
     public void display(Graphics g){
-        Image img = Toolkit.getDefaultToolkit().getImage(getImgURL());
+        Image img = this.imgIcon.getImage();
         g.drawImage(img, getX(), getY(), getSize(), getSize(), null);
     }
 }

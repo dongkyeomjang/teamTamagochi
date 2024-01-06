@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class TamaManager {
+    private MyFrame myframe;
     private Tamagochi tama;
     private ArrayList<Poop> poops;
     private ArrayList<Tombstone> tombstones;
 
-    public TamaManager(){
+    public TamaManager(MyFrame myframe){
         this.tama = null;
         poops = new ArrayList<Poop>();
         tombstones = new ArrayList<Tombstone>();
+        this.myframe = myframe;
     }
     public void createTama(String nickname){
         int x=200, y=310, size=110;
@@ -23,7 +25,8 @@ public class TamaManager {
         if(tama.getSatiety() >= 10){
             if(Math.random() < 0.4){
                 tombstones.add(tama.dieByEat("배부른 상태에서 먹다가 체해서(운없어서) 죽음", tombstones.size()));
-                tama.setImgURL("src/img/tamaGhostImg.png");
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver();
             }
         }
         //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
@@ -31,7 +34,8 @@ public class TamaManager {
         // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
         if(tama.getSatiety() >= 15){
             tombstones.add(tama.dieByEat("죽을때까지 먹다가 배터져 죽음", tombstones.size()));
-            tama.setImgURL("src/img/tamaGhostImg.png");
+            tama.setImgIcon("src/img/tamaGhostImg.png");
+            myframe.gameOver();
         }
     }
     public void sleep(){
@@ -41,6 +45,33 @@ public class TamaManager {
     public void clean(){
         // poop를 모두 제거
         poops.clear();
+    }
+    public void levelUp(){
+        tama.setLevel(tama.getLevel()+1);
+        switch (tama.getLevel()){
+            case 2:
+                tama.setImgIcon("src/img/tamagochiImg2.png");
+                System.out.println("레벨2");
+                break;
+            case 3:
+                tama.setImgIcon("src/img/tamagochiImg3.png");
+                System.out.println("레벨3");
+                break;
+            case 4:
+                tama.setImgIcon("src/img/tamagochiImg4.png");
+                System.out.println("레벨4");
+                break;
+            case 5:
+                tama.setImgIcon("src/img/tamagochiImg5.png");
+                System.out.println("레벨5");
+                break;
+            default:
+                tama.setImgIcon("src/img/tamagochiImg.png");
+                break;
+        }
+        if(tama.getLevel()==6){
+            myframe.gameClear();
+        }
     }
     public void createPoop(){
         // poop 생성
@@ -55,7 +86,8 @@ public class TamaManager {
         // 만약 poop가 10개라면, Tamagochi의 dieByPoop() 메소드 호출. 즉 poop이 10개가 되면 죽음.
         if(poops.size() >= 10){
             tombstones.add(tama.dieByPoop("똥독 올라 죽음", tombstones.size()));
-            tama.setImgURL("src/img/tamaGhostImg.png");
+            tama.setImgIcon("src/img/tamaGhostImg.png");
+            myframe.gameOver();
         }
     }
     public void gettingHungry(){
@@ -64,7 +96,8 @@ public class TamaManager {
         tama.setSatiety(tama.getSatiety()-1);
         if(tama.getSatiety() <= 0){
             tombstones.add(tama.dieByEat("배고파서 죽음", tombstones.size()));
-            tama.setImgURL("src/img/tamaGhostImg.png");
+            tama.setImgIcon("src/img/tamaGhostImg.png");
+            myframe.gameOver();
         }
     }
     public void gettingSleepy() {
@@ -75,10 +108,12 @@ public class TamaManager {
         if (tama.getFatigue() >= 10) {
             if (tama.getFatigue() == 15) {
                 tombstones.add(tama.dieBySleep("피곤에 찌들어 죽음", tombstones.size()));
-                tama.setImgURL("src/img/tamaGhostImg.png");
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver();
             } else if (Math.random() < 0.4) {
                 tombstones.add(tama.dieBySleep("피곤해서 죽음", tombstones.size()));
-                tama.setImgURL("src/img/tamaGhostImg.png");
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver();
             }
         }
     }

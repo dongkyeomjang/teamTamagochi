@@ -29,7 +29,7 @@ public class MyFrame extends JFrame {
         BackgroundPanel backgroundPanel = new BackgroundPanel("src/img/backgroundImg.png"); // 여기에 원하는 이미지 경로 입력
         backgroundPanel.setLayout(null);
 
-        tamaManager = new TamaManager();
+        tamaManager = new TamaManager(this);
         String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
         tamaManager.createTama(nickname);
         if(nickname == null) {
@@ -102,7 +102,7 @@ public class MyFrame extends JFrame {
         scheduler = Executors.newScheduledThreadPool(3);
 
         tracker = new MediaTracker(this);
-        Image tamaImage = Toolkit.getDefaultToolkit().getImage(tamaManager.getTama().getImgURL());
+        Image tamaImage = tamaManager.getTama().getImageIcon().getImage();
         tracker.addImage(tamaImage, 0);
 
         try {
@@ -118,7 +118,7 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.levelUp();
             SwingUtilities.invokeLater(this::repaint);
-        },60,60, TimeUnit.SECONDS);
+        },10,5, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
             satietyBar.setValue(tamaManager.getTama().getSatiety());
@@ -141,9 +141,49 @@ public class MyFrame extends JFrame {
 
         setVisible(true);
     }
-    public void close() {
+    public void gameClear() {
         if (scheduler != null) {
             scheduler.shutdown();
+        }
+        JOptionPane.showMessageDialog(null, "축하합니다! 게임을 클리어했습니다!", "게임 클리어", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
+    }
+    public void gameOver() {
+        if (scheduler != null) {
+            scheduler.shutdown();
+        }
+        // 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
+        int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?", "게임 오버", JOptionPane.YES_NO_OPTION);
+        if (restart == JOptionPane.YES_OPTION) {
+            // 게임 재시작. 닉네임 재설정
+            String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+            tamaManager.createTama(nickname);
+            satietyBar.setValue(tamaManager.getTama().getSatiety());
+            fatigueBar.setValue(tamaManager.getTama().getFatigue());
+            scheduler = Executors.newScheduledThreadPool(3);
+            scheduler.scheduleAtFixedRate(() -> {
+                tamaManager.levelUp();
+                SwingUtilities.invokeLater(this::repaint);
+            },0,60, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() -> {
+                tamaManager.gettingHungry();
+                satietyBar.setValue(tamaManager.getTama().getSatiety());
+
+                SwingUtilities.invokeLater(this::repaint);
+            }, 10, 10, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() -> {
+                tamaManager.gettingSleepy();
+                fatigueBar.setValue(tamaManager.getTama().getFatigue());
+
+                SwingUtilities.invokeLater(this::repaint);
+            }, 20, 20, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() -> {
+                tamaManager.createPoop();
+                SwingUtilities.invokeLater(this::repaint);
+            }, 5, 5, TimeUnit.SECONDS);
+            repaint();
+        } else {
+            System.exit(0);
         }
     }
 
