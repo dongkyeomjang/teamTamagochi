@@ -3,7 +3,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import java.util.ArrayList;
 
 
 public class MyFrame extends JFrame {
@@ -19,7 +18,6 @@ public class MyFrame extends JFrame {
     private Timer hungryTimer;
     private Timer sleepyTimer;
     private Tamagochi tama;
-    private Timer poopTimer;    
     private TamaManager tamaManager;
     private ActionListener actionListener;
     private JProgressBar satietyBar;
@@ -40,6 +38,12 @@ public class MyFrame extends JFrame {
         tamaManager = new TamaManager();
         String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
         tamaManager.createTama(nickname);
+        if(nickname == null) {
+        	System.exit(1);
+        }
+        else if(nickname.trim().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        }
         ImageIcon tamaIcon = new ImageIcon(tamaManager.getTama().getImgURL());
         // 이미지 크기 조정
         Image image = tamaIcon.getImage();
@@ -55,10 +59,9 @@ public class MyFrame extends JFrame {
         //actionListener 생성 및 배치
         actionListener = e -> {
             if(e.getSource() == eatButton){
-                tamaManager.feed();
+                tamaManager.feed(hungryTimer, sleepyTimer);
                 satietyBar.setValue(tamaManager.getTama().getSatiety());
                 System.out.println("밥먹음");
-                System.out.println(tamaManager.getFood());
                 repaint();
             }
             else if(e.getSource() == sleepButton){
@@ -151,11 +154,7 @@ public class MyFrame extends JFrame {
 		Random rand = new Random();
         // hungryTimer 생성 및 시작
         hungryTimer = new Timer(2000, e -> {
-            if(tamaManager.getState() == 0) {
-            	hungryTimer.stop();
-            	JOptionPane.showOptionDialog(null, "사망", "사망", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttons, "재실행");
-            }
-            tamaManager.gettingHungry();
+            tamaManager.gettingHungry(hungryTimer, sleepyTimer);
             satietyBar.setValue(tamaManager.getTama().getSatiety());
             repaint();
         });
@@ -163,22 +162,11 @@ public class MyFrame extends JFrame {
         
         // sleepyTimer 생성 및 시작
         sleepyTimer = new Timer(5000, e -> {
-            if(tamaManager.getState() == 0) {
-            	sleepyTimer.stop();
-            }
             tamaManager.gettingSleepy();
             fatigueBar.setValue(tamaManager.getTama().getFatigue());
             repaint();
         });
         sleepyTimer.start();
-        
-        // poopTimer 생성 및 시작
-        poopTimer = new Timer(2000, e -> { // 2초마다 실행
-            tamaManager.createPoop();
-            repaint();
-        });
-        poopTimer.start(); // 타이머 시작
-
     }
     
     class BackgroundPanel extends JPanel {
