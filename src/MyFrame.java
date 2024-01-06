@@ -1,5 +1,4 @@
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -34,8 +33,10 @@ public class MyFrame extends JFrame {
         gbc.fill=GridBagConstraints.HORIZONTAL;
 
         tamaManager = new TamaManager();
-        String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
-        tamaManager.createTama(nickname);
+        
+        String nickname;
+   
+
         ImageIcon tamaIcon = new ImageIcon(tamaManager.getTama().getImgURL());
         // 이미지 크기 조정
         Image image = tamaIcon.getImage();
@@ -57,6 +58,7 @@ public class MyFrame extends JFrame {
                 repaint();
             }
             else if(e.getSource() == sleepButton){
+            	disableButton();
                 tamaManager.sleep();
                 fatigueBar.setValue(tamaManager.getTama().getFatigue());
                 System.out.println("잠잠");
@@ -68,6 +70,7 @@ public class MyFrame extends JFrame {
                 repaint();
             }
         };
+        //ImageIcon sleepImg = new ImageIcon(new ImageIcon("src/img/sleepImg.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
         eatButton.addActionListener(actionListener);
         sleepButton.addActionListener(actionListener);
         cleanButton.addActionListener(actionListener);
@@ -82,7 +85,6 @@ public class MyFrame extends JFrame {
         gbc.weighty = 0;
         menuPanel.setOpaque(false);
         add(menuPanel, gbc);
-
 
         //namePanel 구성 요소 생성 및 배치
         namePanel = new JPanel();
@@ -138,7 +140,20 @@ public class MyFrame extends JFrame {
         repaint();
         setVisible(true);
     }
-    public void start(){
+   
+    private void enableButton() {
+        eatButton.setEnabled(true);
+        sleepButton.setEnabled(true);
+
+    }
+
+    private void disableButton() {
+        eatButton.setEnabled(false);
+        sleepButton.setEnabled(false);
+
+    }
+	
+	public void start(){
         // hungryTimer 생성 및 시작
         hungryTimer = new Timer(10000, e -> {
             tamaManager.gettingHungry();
@@ -147,12 +162,16 @@ public class MyFrame extends JFrame {
         });
         hungryTimer.start();
         // sleepyTimer 생성 및 시작
-        sleepyTimer = new Timer(20000, e -> {
+        sleepyTimer = new Timer(2000, e -> {
             tamaManager.gettingSleepy();
             fatigueBar.setValue(tamaManager.getTama().getFatigue());
+            enableButton();
             repaint();
+          
         });
-        sleepyTimer.start();
+        
+     
+      
     }
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;

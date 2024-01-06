@@ -11,6 +11,7 @@ public class Tamagochi extends Drawable{
 
     private Timestamp createTime;
     private String nickname;
+    
 
     public Tamagochi(int x, int y, int size, String imgURL, String nickname) {
         super(x, y, size, imgURL);
@@ -32,7 +33,9 @@ public class Tamagochi extends Drawable{
     }
     public Tombstone dieBySleep(String causeOfDeath){
         // 사인 작성, 비석 생성
+ 
         return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
+    	
     }
 
     public Tombstone dieByPoop(String causeOfDeath){
@@ -68,4 +71,12 @@ public class Tamagochi extends Drawable{
     public String getImgURL() {
         return super.getImgURL();
     }
+    
+    public void decreaseFatigue(int amount) {
+        this.fatigue -= amount;
+        if (this.fatigue < 0) {
+            this.fatigue = 0;
+        }
+    }
+
 }

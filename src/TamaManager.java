@@ -1,13 +1,15 @@
-
-
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.swing.Timer;
 
 public class TamaManager {
     private Tamagochi tama;
     private ArrayList<Poop> poops;
     private ArrayList<Tombstone> tombstones;
-
+    private boolean isSleeping = false;		//초기값 잠x
+    private Timer sleepyTimer;
+    
     public TamaManager(){
         this.tama = null;
         poops = new ArrayList<Poop>();
@@ -17,6 +19,7 @@ public class TamaManager {
         int x=50, y=50, size=50;
         tama = new Tamagochi(x, y, size, "src/img/tamagochiImg.png", nickname);
     }
+    
     public void feed(){
         Random random= new Random();
         // 만약 포만감이 10이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
@@ -32,10 +35,25 @@ public class TamaManager {
             tombstones.add(tama.dieByEat("죽을때까지 먹다가 배터져 죽음"));
         }
     }
+    
     public void sleep(){
-        Random random= new Random();
-        tama.setFatigue(tama.getFatigue()-random.nextInt(4));
-    }
+    	Random random = new Random();
+        sleepyTimer = new Timer(2000, timerEvent -> {
+        	//일어날 때 피로도 감소
+        	if (!isSleeping) {
+        		int FatigueDecrease = new Random().nextInt(3) + 1;
+        		tama.decreaseFatigue(FatigueDecrease);
+        		//fatigueBar.setValue(tama.getFatigue());
+        	 }
+           
+           isSleeping = false; // 자는 상태 해제
+           System.out.println("일어났습니다.");
+           
+       });
+
+        sleepyTimer.setRepeats(false);
+        sleepyTimer.start(); // Timer 시작
+   }
     public void clean(){
         // poop를 모두 제거
         poops.clear();
@@ -63,14 +81,16 @@ public class TamaManager {
         // 만약 피로도가 10이 넘어가면, 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
         // 피로도가 15에 도달하면 그냥 dieBySleep() 호출. 즉 피로도가 15가 되면 죽음.
         tama.setFatigue(tama.getFatigue() + 1);
-        if (tama.getFatigue() >= 10) {
-            if (tama.getFatigue() == 15) {
-                tombstones.add(tama.dieBySleep("피곤에 찌들어 죽"));
-            } else if (Math.random() < 0.4) {
+        if (tama.getFatigue() >= 11) {
+            if (tama.getFatigue() == 15 || Math.random() < 0.4) {
                 tombstones.add(tama.dieBySleep("피곤해서 죽음"));
+                System.out.println("죽음");
+                    sleepyTimer.stop();
+                
             }
         }
-    }
+    } 
+    
     public Tamagochi getTama(){
         return tama;
     }
