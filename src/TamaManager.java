@@ -84,14 +84,26 @@ public class TamaManager {
     }
     public void createPoop(){
         // poop 생성
+    	
         Random random = new Random();
-        // 화면 크기에 맞추어 랜덤 좌표 생성 (예시: 화면 크기가 500x500)
-        int x = random.nextInt(350)+100; // 화면 너비에서 poop 크기(50)를 뺀 범위
-        int y = random.nextInt(100)+350; // 화면 높이에서 poop 크기(50)를 뺀 범위
+        int x, y;
+        int size = 50;
 
-        int size=50;
+        if (poops.isEmpty()) {
+            // 첫 번째 똥은 타마고치 머리 부근에 위치
+            x = 230; // 타마고치의 너비 범위 내에서 랜덤
+            y = 280; // 타마고치의 y 좌표
+        } else {
+            // 그 이후의 똥은 랜덤 위치
+            do {
+                x = random.nextInt(350) + 50;
+                y = random.nextInt(80) + 330;
+            } while (x < 310 && x + size > 200 && y < 420 && y + size > 310); // 타마고치와 겹치지 않도록 함
+        }
+
         Poop poop = new Poop(x, y, size, "src/img/poopImg.png");
         poops.add(poop);
+        
         // 만약 poop가 10개라면, Tamagochi의 dieByPoop() 메소드 호출. 즉 poop이 10개가 되면 죽음.
         if(poops.size() >= 10){
             tombstones.add(tama.dieByPoop("똥독 올라 죽음", tombstones.size()));
@@ -99,6 +111,8 @@ public class TamaManager {
             myframe.gameOver("똥독 올라 죽음");
         }
     }
+    
+    
     public void gettingHungry(){
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '10초'마다 포만감을 1씩 감소시킨다.
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
