@@ -1,16 +1,16 @@
-
+import javax.swing.*;
 import java.awt.*;
 
 public abstract class Drawable {
     private int x;
     private int y;
     private int size;
-    private String imgURL;
+    ImageIcon imgIcon;
     public Drawable(int x, int y, int size, String imgURL) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.imgURL = imgURL;
+        this.imgIcon = new ImageIcon(imgURL);
     }
     public int getX() {
         return x;
@@ -21,8 +21,11 @@ public abstract class Drawable {
     public int getSize() {
         return size;
     }
-    public String getImgURL() {
-        return imgURL;
+    public void setImgIcon(String imgURL) {
+        this.imgIcon = new ImageIcon(imgURL);
+    }
+    public ImageIcon getImageIcon() {
+        return this.imgIcon;
     }
     public abstract void display(Graphics g);
 }
