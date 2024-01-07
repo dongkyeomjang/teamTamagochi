@@ -18,8 +18,7 @@ public class MyFrame extends JFrame {
     private JLabel nameLabel;
     private TamaManager tamaManager;
     private ActionListener actionListener;
-    private JProgressBar satietyBar;
-    private JProgressBar fatigueBar;
+
     public MyFrame(){
         super();
 
@@ -67,12 +66,10 @@ public class MyFrame extends JFrame {
         actionListener = e -> {
             if(e.getSource() == eatButton){
                 tamaManager.feed();
-                satietyBar.setValue(tamaManager.getTama().getSatiety());
                 repaint();
             }
             else if(e.getSource() == sleepButton){
                 tamaManager.sleep();
-                fatigueBar.setValue(tamaManager.getTama().getFatigue());
                 repaint();
             }
             else if(e.getSource() == cleanButton){
@@ -83,21 +80,6 @@ public class MyFrame extends JFrame {
         eatButton.addActionListener(actionListener);
         sleepButton.addActionListener(actionListener);
         cleanButton.addActionListener(actionListener);
-
-        //포만감 게이지바
-        satietyBar = new JProgressBar(0, 15);
-        satietyBar.setValue(tamaManager.getTama().getSatiety());
-        satietyBar.setStringPainted(true);
-        satietyBar.setBounds(350, 100, 125, 20);
-        backgroundPanel.add(satietyBar);
-
-        // 피로도 게이지 초기화 및 설정
-        fatigueBar = new JProgressBar(0, 15);
-        fatigueBar.setValue(tamaManager.getTama().getFatigue());
-        fatigueBar.setStringPainted(true);
-        fatigueBar.setBounds(350, 130, 125, 20);
-        backgroundPanel.add(fatigueBar);
-
 
         scheduler = Executors.newScheduledThreadPool(3);
 
@@ -112,7 +94,6 @@ public class MyFrame extends JFrame {
         }
 
         if (!tracker.isErrorAny()) {
-            // 이미지 로딩 완료
             repaint();
         }
         scheduler.scheduleAtFixedRate(() -> {
@@ -121,19 +102,14 @@ public class MyFrame extends JFrame {
         },60,60, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
-            satietyBar.setValue(tamaManager.getTama().getSatiety());
-
             SwingUtilities.invokeLater(this::repaint);
         }, 10, 10, TimeUnit.SECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingSleepy();
-            fatigueBar.setValue(tamaManager.getTama().getFatigue());
-
             SwingUtilities.invokeLater(this::repaint);
         }, 20, 20, TimeUnit.SECONDS);
 
-        //첫 번째 똥이 생성되어도, 그 이후부터 같이 출력된다는 문제 발생. 해결 필요
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.createPoop();
             SwingUtilities.invokeLater(this::repaint);
@@ -159,8 +135,7 @@ public class MyFrame extends JFrame {
             String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
             tamaManager.createTama(nickname);
             nameLabel.setText(nickname);
-            satietyBar.setValue(tamaManager.getTama().getSatiety());
-            fatigueBar.setValue(tamaManager.getTama().getFatigue());
+
             scheduler = Executors.newScheduledThreadPool(3);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
@@ -168,13 +143,11 @@ public class MyFrame extends JFrame {
             },60,60, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.gettingHungry();
-                satietyBar.setValue(tamaManager.getTama().getSatiety());
 
                 SwingUtilities.invokeLater(this::repaint);
             }, 10, 10, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.gettingSleepy();
-                fatigueBar.setValue(tamaManager.getTama().getFatigue());
 
                 SwingUtilities.invokeLater(this::repaint);
             }, 20, 20, TimeUnit.SECONDS);
@@ -209,7 +182,6 @@ public class MyFrame extends JFrame {
             //똥을 우선적으로 그리게
             for(Poop p: tamaManager.getPoops()) {
                 drawables.add((Drawable) p);
-                // 게이지 바도 drawables에 넣어서 그려주어야 함. 추후 추가
             }
             //똥->비석
             for(Tombstone t: tamaManager.getTombstones()) {
@@ -217,6 +189,9 @@ public class MyFrame extends JFrame {
             }
             //똥->비석->캐릭터
             drawables.add((Drawable) tamaManager.getTama());
+            //똥->비석->캐릭터->바
+            drawables.add((Drawable) tamaManager.getSatietyBar());
+            drawables.add((Drawable) tamaManager.getFatigueBar());
             for(Drawable d: drawables) {
                 d.display(g);
             }

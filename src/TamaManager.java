@@ -8,16 +8,22 @@ public class TamaManager {
     private Tamagochi tama;
     private ArrayList<Poop> poops;
     private ArrayList<Tombstone> tombstones;
+    private SatietyBar satietyBar;
+    private FatigueBar fatigueBar;
 
     public TamaManager(MyFrame myframe){
         this.tama = null;
         poops = new ArrayList<Poop>();
         tombstones = new ArrayList<Tombstone>();
+        satietyBar = null;
+        fatigueBar = null;
         this.myframe = myframe;
     }
     public void createTama(String nickname){
         int x=200, y=310, size=110;
         tama = new Tamagochi(x, y, size, "src/img/tamagochiImg.png", nickname);
+        satietyBar = new SatietyBar(350, 100, 110, "src/img/Satiety"+tama.getSatiety()+".png");
+        fatigueBar = new FatigueBar(350, 130, 110, "src/img/Fatigue"+tama.getFatigue()+".png");
     }
     public void feed(){
         Random random= new Random();
@@ -31,6 +37,7 @@ public class TamaManager {
         }
         //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
         tama.setSatiety(tama.getSatiety()+random.nextInt(3)+1);
+        satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
         // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
         if(tama.getSatiety() >= 15){
             tombstones.add(tama.dieByEat("죽을때까지 먹다가 배터져 죽음", tombstones.size()));
@@ -41,6 +48,10 @@ public class TamaManager {
     public void sleep(){
         Random random= new Random();
         tama.setFatigue(tama.getFatigue()-random.nextInt(4));
+        if(tama.getFatigue() < 0){
+            tama.setFatigue(0);
+        }
+        fatigueBar.setImgIcon("src/img/Fatigue"+tama.getFatigue()+".png");
     }
     public void clean(){
         // poop를 모두 제거
@@ -94,6 +105,7 @@ public class TamaManager {
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '10초'마다 포만감을 1씩 감소시킨다.
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
         tama.setSatiety(tama.getSatiety()-1);
+        satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
         if(tama.getSatiety() <= 0){
             tombstones.add(tama.dieByEat("배고파서 죽음", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
@@ -105,6 +117,7 @@ public class TamaManager {
         // 만약 피로도가 10이 넘어가면, 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
         // 피로도가 15에 도달하면 그냥 dieBySleep() 호출. 즉 피로도가 15가 되면 죽음.
         tama.setFatigue(tama.getFatigue() + 1);
+        fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
         if (tama.getFatigue() >= 10) {
             if (tama.getFatigue() == 15) {
                 tombstones.add(tama.dieBySleep("피곤에 찌들어 죽음", tombstones.size()));
@@ -125,5 +138,11 @@ public class TamaManager {
     }
     public ArrayList<Tombstone> getTombstones(){
         return tombstones;
+    }
+    public SatietyBar getSatietyBar(){
+        return satietyBar;
+    }
+    public FatigueBar getFatigueBar(){
+        return fatigueBar;
     }
 }
