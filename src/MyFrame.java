@@ -37,19 +37,19 @@ public class MyFrame extends JFrame {
         }
 
         //밥 버튼
-        ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         eatButton = new JButton(eatButtonImg);
         eatButton.setBounds(35, 500, 90, 80);
         backgroundPanel.add(eatButton);
 
         //재우기 버튼
-        ImageIcon sleepButtonImg = new ImageIcon(new ImageIcon("src/img/sleepImg.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        ImageIcon sleepButtonImg = new ImageIcon(new ImageIcon("src/img/sleepImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         sleepButton = new JButton(sleepButtonImg);
         sleepButton.setBounds(210, 500, 90, 80);
         backgroundPanel.add(sleepButton);
 
         //똥 치우기 버튼
-        ImageIcon cleanButtonImg = new ImageIcon(new ImageIcon("src/img/cleanImg1.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        ImageIcon cleanButtonImg = new ImageIcon(new ImageIcon("src/img/cleanImg1.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         cleanButton = new JButton(cleanButtonImg);
         cleanButton.setBounds(380, 500, 90, 80);
         backgroundPanel.add(cleanButton);
