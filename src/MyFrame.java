@@ -165,7 +165,7 @@ public class MyFrame extends JFrame {
             // 똥 배열 비우기
             tamaManager.clean();
             
-            scheduler = Executors.newScheduledThreadPool(4);
+            scheduler = Executors.newScheduledThreadPool(5);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
                 SwingUtilities.invokeLater(this::repaint);
