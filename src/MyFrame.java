@@ -134,6 +134,10 @@ public class MyFrame extends JFrame {
             tamaManager.createTama(nickname);
             nameLabel.setText(nickname);
 
+            // 똥 배열 비우기 및 화면 다시 그리기
+            tamaManager.clean();
+            repaint();
+            
             scheduler = Executors.newScheduledThreadPool(3);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
