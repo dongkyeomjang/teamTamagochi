@@ -26,7 +26,7 @@ public class TamaManager {
             if(Math.random() < 0.4){
                 tombstones.add(tama.dieByEat("배부른 상태에서 먹다가 체해서(운없어서) 죽음", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
-                myframe.gameOver();
+                myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
             }
         }
         //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
@@ -35,7 +35,7 @@ public class TamaManager {
         if(tama.getSatiety() >= 15){
             tombstones.add(tama.dieByEat("죽을때까지 먹다가 배터져 죽음", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
-            myframe.gameOver();
+            myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
         }
     }
     public void sleep(){
@@ -87,7 +87,7 @@ public class TamaManager {
         if(poops.size() >= 10){
             tombstones.add(tama.dieByPoop("똥독 올라 죽음", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
-            myframe.gameOver();
+            myframe.gameOver("똥독 올라 죽음");
         }
     }
     public void gettingHungry(){
@@ -97,7 +97,7 @@ public class TamaManager {
         if(tama.getSatiety() <= 0){
             tombstones.add(tama.dieByEat("배고파서 죽음", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
-            myframe.gameOver();
+            myframe.gameOver("배고파서 죽음");
         }
     }
     public void gettingSleepy() {
@@ -109,11 +109,11 @@ public class TamaManager {
             if (tama.getFatigue() == 15) {
                 tombstones.add(tama.dieBySleep("피곤에 찌들어 죽음", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
-                myframe.gameOver();
+                myframe.gameOver("피곤에 찌들어 죽음");
             } else if (Math.random() < 0.4) {
                 tombstones.add(tama.dieBySleep("피곤해서 죽음", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
-                myframe.gameOver();
+                myframe.gameOver("피곤해서 죽음");
             }
         }
     }

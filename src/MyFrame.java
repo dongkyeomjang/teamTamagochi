@@ -59,7 +59,7 @@ public class MyFrame extends JFrame {
 
         //이름 라벨
         nameLabel = new JLabel(nickname);
-        nameLabel.setBounds(200, 0, 100, 50);
+        nameLabel.setBounds(245, 0, 100, 50);
         backgroundPanel.add(nameLabel);
         setContentPane(backgroundPanel);
 
@@ -118,7 +118,7 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.levelUp();
             SwingUtilities.invokeLater(this::repaint);
-        },10,5, TimeUnit.SECONDS);
+        },60,60, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
             satietyBar.setValue(tamaManager.getTama().getSatiety());
@@ -148,23 +148,24 @@ public class MyFrame extends JFrame {
         JOptionPane.showMessageDialog(null, "축하합니다! 게임을 클리어했습니다!", "게임 클리어", JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
     }
-    public void gameOver() {
+    public void gameOver(String causeOfDeath) {
         if (scheduler != null) {
             scheduler.shutdown();
         }
         // 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
-        int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?", "게임 오버", JOptionPane.YES_NO_OPTION);
+        int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
         if (restart == JOptionPane.YES_OPTION) {
             // 게임 재시작. 닉네임 재설정
             String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
             tamaManager.createTama(nickname);
+            nameLabel.setText(nickname);
             satietyBar.setValue(tamaManager.getTama().getSatiety());
             fatigueBar.setValue(tamaManager.getTama().getFatigue());
             scheduler = Executors.newScheduledThreadPool(3);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
                 SwingUtilities.invokeLater(this::repaint);
-            },0,60, TimeUnit.SECONDS);
+            },60,60, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.gettingHungry();
                 satietyBar.setValue(tamaManager.getTama().getSatiety());
