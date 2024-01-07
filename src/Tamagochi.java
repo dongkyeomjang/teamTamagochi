@@ -1,71 +1,127 @@
+import java.util.ArrayList;
+import java.util.Random;
 
-import java.awt.*;
-import java.sql.Timestamp;
+public class TamaManager {
+    private MyFrame myframe;
+    private Tamagochi tama;
+    private ArrayList<Poop> poops;
+    private ArrayList<Tombstone> tombstones;
 
-public class Tamagochi extends Drawable{
-    private int satiety;
-    private int fatigue;
+    public TamaManager(MyFrame myframe){
+        this.tama = null;
+        poops = new ArrayList<Poop>();
+        tombstones = new ArrayList<Tombstone>();
+        this.myframe = myframe;
+    }
+    public void createTama(String nickname){
+        int x=200, y=310, size=110;
+        tama = new Tamagochi(x, y, size, "src/img/tamagochiImg.png", nickname);
+    }
+    public void feed(){
+        Random random= new Random();
+        // 만약 포만감이 10이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
+        if(tama.getSatiety() >= 10){
+            if(Math.random() < 0.4){
+                tombstones.add(tama.dieByEat("배부른 상태에서 먹다가 체해서(운없어서) 죽음", tombstones.size()));
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
+            }
+        }
+        //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
+        tama.setSatiety(tama.getSatiety()+random.nextInt(3)+1);
+        // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
+        if(tama.getSatiety() >= 15){
+            tombstones.add(tama.dieByEat("죽을때까지 먹다가 배터져 죽음", tombstones.size()));
+            tama.setImgIcon("src/img/tamaGhostImg.png");
+            myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
+        }
+    }
+    public void sleep(){
+        Random random= new Random();
+        tama.setFatigue(tama.getFatigue()-random.nextInt(4));
+    }
+    public void clean(){
+        // poop를 모두 제거
+        poops.clear();
+    }
+    public void levelUp(){
+        tama.setLevel(tama.getLevel()+1);
+        switch (tama.getLevel()){
+            case 2:
+                tama.setImgIcon("src/img/tamagochiImg2.png");
+                System.out.println("레벨2");
+                break;
+            case 3:
+                tama.setImgIcon("src/img/tamagochiImg3.png");
+                System.out.println("레벨3");
+                break;
+            case 4:
+                tama.setImgIcon("src/img/tamagochiImg4.png");
+                System.out.println("레벨4");
+                break;
+            case 5:
+                tama.setImgIcon("src/img/tamagochiImg5.png");
+                System.out.println("레벨5");
+                break;
+            default:
+                tama.setImgIcon("src/img/tamagochiImg.png");
+                break;
+        }
+        if(tama.getLevel()==6){
+            myframe.gameClear();
+        }
+    }
+    public void createPoop(){
+        // poop 생성
+        Random random = new Random();
+        // 화면 크기에 맞추어 랜덤 좌표 생성 (예시: 화면 크기가 500x500)
+        int x = random.nextInt(350)+100; // 화면 너비에서 poop 크기(50)를 뺀 범위
+        int y = random.nextInt(100)+350; // 화면 높이에서 poop 크기(50)를 뺀 범위
 
-    //poop는 매니저에 넣는게 맞는 것 같아서 뺐음.
-    private int level;
-
-    private Timestamp createTime;
-    private String nickname;
-
-    public Tamagochi(int x, int y, int size, String imgURL, String nickname) {
-        super(x, y, size, imgURL);
-        this.satiety = 8;
-        this.fatigue = 0;
-        this.level = 1;
-        this.createTime = new Timestamp(System.currentTimeMillis());
-        this.nickname = nickname;
+        int size=50;
+        Poop poop = new Poop(x, y, size, "src/img/poopImg.png");
+        poops.add(poop);
+        // 만약 poop가 10개라면, Tamagochi의 dieByPoop() 메소드 호출. 즉 poop이 10개가 되면 죽음.
+        if(poops.size() >= 10){
+            tombstones.add(tama.dieByPoop("똥독 올라 죽음", tombstones.size()));
+            tama.setImgIcon("src/img/tamaGhostImg.png");
+            myframe.gameOver("똥독 올라 죽음");
+        }
     }
-
-    public void display(Graphics g){
-        Image img = Toolkit.getDefaultToolkit().getImage(getImgURL());
-        g.drawImage(img, getX(), getY(), getSize(), getSize(), null);
+    public void gettingHungry(){
+        // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '10초'마다 포만감을 1씩 감소시킨다.
+        // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
+        tama.setSatiety(tama.getSatiety()-1);
+        if(tama.getSatiety() <= 0){
+            tombstones.add(tama.dieByEat("배고파서 죽음", tombstones.size()));
+            tama.setImgIcon("src/img/tamaGhostImg.png");
+            myframe.gameOver("배고파서 죽음");
+        }
     }
-
-    public Tombstone dieByEat(String causeOfDeath){
-        // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
+    public void gettingSleepy() {
+        // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '20초'마다 피로도를 1씩 증가시킨다.
+        // 만약 피로도가 10이 넘어가면, 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
+        // 피로도가 15에 도달하면 그냥 dieBySleep() 호출. 즉 피로도가 15가 되면 죽음.
+        tama.setFatigue(tama.getFatigue() + 1);
+        if (tama.getFatigue() >= 10) {
+            if (tama.getFatigue() == 15) {
+                tombstones.add(tama.dieBySleep("피곤에 찌들어 죽음", tombstones.size()));
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver("피곤에 찌들어 죽음");
+            } else if (Math.random() < 0.4) {
+                tombstones.add(tama.dieBySleep("피곤해서 죽음", tombstones.size()));
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver("피곤해서 죽음");
+            }
+        }
     }
-    public Tombstone dieBySleep(String causeOfDeath){
-        // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
+    public Tamagochi getTama(){
+        return tama;
     }
-
-    public Tombstone dieByPoop(String causeOfDeath){
-        // 사인 작성, 비석 생성
-        return new Tombstone(getX(), getY(), getSize(), "src/img/tombstoneImg1.png",causeOfDeath);
+    public ArrayList<Poop> getPoops(){
+        return poops;
     }
-
-    //-------------------------getter, setter-------------------------
-    public int getSatiety() {
-        return satiety;
-    }
-    public void setSatiety(int satiety) {
-        this.satiety = satiety;
-    }
-    public int getFatigue() {
-        return fatigue;
-    }
-    public void setFatigue(int fatigue) {
-        this.fatigue = fatigue;
-    }
-    public int getLevel() {
-        return level;
-    }
-    public void setLevel(int level) {
-        this.level = level;
-    }
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-    public String getNickname() {
-        return nickname;
-    }
-    public String getImgURL() {
-        return super.getImgURL();
+    public ArrayList<Tombstone> getTombstones(){
+        return tombstones;
     }
 }
