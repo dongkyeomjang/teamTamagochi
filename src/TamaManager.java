@@ -43,9 +43,8 @@ public class TamaManager {
             myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
         }
     }
-    public void sleep(){
-        Random random= new Random();
-        tama.setFatigue(tama.getFatigue()-random.nextInt(4));
+    public void sleep(int fatigueReduction){
+        tama.setFatigue(tama.getFatigue() - fatigueReduction);
         if(tama.getFatigue() < 0){
             tama.setFatigue(0);
         }
