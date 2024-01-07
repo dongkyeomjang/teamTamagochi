@@ -54,6 +54,7 @@ public class TamaManager {
         // poop를 모두 제거
         poops.clear();
     }
+    //move에서 움직임을 url로 변경해서 url을 통한 변경을 위해 setImgURL을 거친 이미지 변경 
     public void levelUp(){
         tama.setLevel(tama.getLevel()+1);
         switch (tama.getLevel()){
