@@ -88,10 +88,21 @@ public class TamaManager {
         // poop 생성
         Random random = new Random();
         // 화면 크기에 맞추어 랜덤 좌표 생성 (예시: 화면 크기가 500x500)
-        int x = random.nextInt(350)+100; // 화면 너비에서 poop 크기(50)를 뺀 범위
-        int y = random.nextInt(100)+350; // 화면 높이에서 poop 크기(50)를 뺀 범위
+        int x, y;
+        int size = 50;
 
-        int size=50;
+        if (poops.isEmpty()) {
+            // 첫 번째 똥은 타마고치 머리 부근에 위치
+            x = 230; // 타마고치의 너비 범위 내에서 랜덤
+            y = 280; // 타마고치의 y 좌표
+        } else {
+            // 그 이후의 똥은 랜덤 위치
+            do {
+                x = random.nextInt(350) + 50;
+                y = random.nextInt(80) + 330;
+            } while (x < 310 && x + size > 200 && y < 420 && y + size > 310); // 타마고치와 겹치지 않도록 함
+        }
+
         Poop poop = new Poop(x, y, size, "src/img/poopImg.png");
         poops.add(poop);
         // 만약 poop가 10개라면, Tamagochi의 dieByPoop() 메소드 호출. 즉 poop이 10개가 되면 죽음.

@@ -135,7 +135,8 @@ public class MyFrame extends JFrame {
             String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
             tamaManager.createTama(nickname);
             nameLabel.setText(nickname);
-
+            // 똥 배열 비우기
+            tamaManager.clean();
             scheduler = Executors.newScheduledThreadPool(3);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
