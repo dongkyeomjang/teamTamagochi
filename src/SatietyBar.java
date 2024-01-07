@@ -1,5 +1,6 @@
 import java.awt.*;
 
+
 public class SatietyBar extends Drawable {
     public SatietyBar(int x, int y, int size, String imgURL) {
         super(x,y,size,imgURL);
