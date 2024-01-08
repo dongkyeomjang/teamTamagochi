@@ -29,13 +29,15 @@ public class MyFrame extends JFrame {
 
         tamaManager = new TamaManager(this);
         String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
-        tamaManager.createTama(nickname);
         if(nickname == null) {
             System.exit(1);
         }
-        else if(nickname.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        while (nickname.trim().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
         }
+
+        tamaManager.createTama(nickname);
 
         //밥 버튼
         ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
@@ -139,10 +141,11 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() ->{
         	tamaManager.move();
         	SwingUtilities.invokeLater(this::repaint);
-        }, 0, 500, TimeUnit.MILLISECONDS);
+        }, 0, 5, TimeUnit.SECONDS);
 
         setVisible(true);
     }
+    
     public void gameClear() {
         if (scheduler != null) {
             scheduler.shutdown();
@@ -188,7 +191,7 @@ public class MyFrame extends JFrame {
             scheduler.scheduleAtFixedRate(() ->{
             	tamaManager.move();
             	SwingUtilities.invokeLater(this::repaint);
-            }, 0, 500, TimeUnit.MILLISECONDS);
+            }, 0, 5, TimeUnit.SECONDS);
             repaint();
         } else {
             System.exit(0);
@@ -232,5 +235,10 @@ public class MyFrame extends JFrame {
             drawables.clear();
         }
     }
+    
+    public boolean isSleepButtonEnabled() {
+        return sleepButton.isEnabled();
+    }
+    
 }
 
