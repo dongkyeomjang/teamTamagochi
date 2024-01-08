@@ -29,13 +29,15 @@ public class MyFrame extends JFrame {
 
         tamaManager = new TamaManager(this);
         String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
-        tamaManager.createTama(nickname);
         if(nickname == null) {
             System.exit(1);
         }
-        else if(nickname.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        while (nickname.trim().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
         }
+
+        tamaManager.createTama(nickname);
 
         //밥 버튼
         ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
@@ -154,6 +156,7 @@ public class MyFrame extends JFrame {
         if (scheduler != null) {
             scheduler.shutdown();
         }
+        repaint();
         // 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
         int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
         if (restart == JOptionPane.YES_OPTION) {

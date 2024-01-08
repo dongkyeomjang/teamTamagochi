@@ -13,7 +13,7 @@ public class Tamagochi extends Drawable{
 
     public Tamagochi(int x, int y, int size, String imgURL, String nickname) {
         super(x, y, size, imgURL);
-        this.satiety = 8;
+        this.satiety = 10;
         this.fatigue = 0;
         this.level = 1;
         this.createTime = new Timestamp(System.currentTimeMillis());
@@ -36,6 +36,7 @@ public class Tamagochi extends Drawable{
             default -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
         };
     }
+    
     public Tombstone dieBySleep(String causeOfDeath, int tombstoneNum){
         return switch (tombstoneNum) {
             case 0 -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath);
