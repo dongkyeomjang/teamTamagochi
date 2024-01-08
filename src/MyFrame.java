@@ -23,6 +23,8 @@ public class MyFrame extends JFrame {
 
         setSize(515, 630);
         setLayout(new GridBagLayout()); // 레이아웃 매니저 변경
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         BackgroundPanel backgroundPanel = new BackgroundPanel("src/img/backgroundImg.png"); // 여기에 원하는 이미지 경로 입력
         backgroundPanel.setLayout(null);
@@ -36,6 +38,8 @@ public class MyFrame extends JFrame {
         else if(nickname.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
         }
+        
+        
 
         //밥 버튼
         ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
@@ -68,23 +72,23 @@ public class MyFrame extends JFrame {
                 repaint();
             }
             else if(e.getSource() == sleepButton){
-                // 10초, 20초, 30초 중 랜덤 시간 선택
+            	// 10초, 20초, 30초 중 랜덤 시간 선택
                 Random rand = new Random();
-                int[] times = {10000, 20000, 30000}; // 밀리초 단위
-                int randomTime = times[rand.nextInt(times.length)];
-                
-                // 랜덤 시간에 따른 피로도 감소
-                int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
-
-                tamaManager.sleep(fatigueReduction);
-                repaint();
-
+            	int[] times = {10000, 20000, 30000}; // 밀리초 단위
+            	 int randomTime = times[rand.nextInt(times.length)];
                 // 버튼을 비활성화
                 eatButton.setEnabled(false);
-                sleepButton.setEnabled(false);
+                sleepButton.setEnabled(false); 
 
                 // 랜덤 시간 후에 버튼을 다시 활성화
                 Timer timer = new Timer(randomTime, ev -> {
+                    
+                    // 랜덤 시간에 따른 피로도 감소
+                    int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
+
+                    tamaManager.sleep(fatigueReduction);
+                    repaint();
+                    
                     sleepButton.setEnabled(true);
                     eatButton.setEnabled(true);
                 });

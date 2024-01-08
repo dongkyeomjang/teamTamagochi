@@ -28,7 +28,7 @@ public class TamaManager {
         // 만약 포만감이 10이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
         if(tama.getSatiety() >= 10){
             if(Math.random() < 0.4){
-                tombstones.add(tama.dieByEat("배부른 상태에서 먹다가 체해서(운없어서) 죽음", tombstones.size()));
+                tombstones.add(tama.dieByEat("체함", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
                 myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
             }
@@ -38,7 +38,7 @@ public class TamaManager {
         satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
         // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
         if(tama.getSatiety() >= 15){
-            tombstones.add(tama.dieByEat("죽을때까지 먹다가 배터져 죽음", tombstones.size()));
+            tombstones.add(tama.dieByEat("배터짐", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
             myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
         }
@@ -49,6 +49,9 @@ public class TamaManager {
             tama.setFatigue(0);
         }
         fatigueBar.setImgIcon("src/img/Fatigue"+tama.getFatigue()+".png");
+        
+    
+       
     }
     public void clean(){
         // poop를 모두 제거
@@ -102,7 +105,7 @@ public class TamaManager {
         
         // 만약 poop가 10개라면, Tamagochi의 dieByPoop() 메소드 호출. 즉 poop이 10개가 되면 죽음.
         if(poops.size() >= 10){
-            tombstones.add(tama.dieByPoop("똥독 올라 죽음", tombstones.size()));
+            tombstones.add(tama.dieByPoop("똥", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
             myframe.gameOver("똥독 올라 죽음");
         }
@@ -151,19 +154,17 @@ public class TamaManager {
     		tama.setImgIcon(tama.getImgURL());
     		break;  
     	}
-    	
-    	
-    	
     }
-    
-    
+    	
+    	
+    	
     public void gettingHungry(){
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '10초'마다 포만감을 1씩 감소시킨다.
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
         tama.setSatiety(tama.getSatiety()-1);
         satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
         if(tama.getSatiety() <= 0){
-            tombstones.add(tama.dieByEat("배고파서 죽음", tombstones.size()));
+            tombstones.add(tama.dieByEat("아사", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
             myframe.gameOver("배고파서 죽음");
         }
@@ -176,11 +177,11 @@ public class TamaManager {
         fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
         if (tama.getFatigue() >= 10) {
             if (tama.getFatigue() == 15) {
-                tombstones.add(tama.dieBySleep("피곤에 찌들어 죽음", tombstones.size()));
+                tombstones.add(tama.dieBySleep("과로", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
                 myframe.gameOver("피곤에 찌들어 죽음");
             } else if (Math.random() < 0.4) {
-                tombstones.add(tama.dieBySleep("피곤해서 죽음", tombstones.size()));
+                tombstones.add(tama.dieBySleep("수면 부족", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
                 myframe.gameOver("피곤해서 죽음");
             }
