@@ -102,7 +102,7 @@ public class MyFrame extends JFrame {
         sleepButton.addActionListener(actionListener);
         cleanButton.addActionListener(actionListener);
 
-        scheduler = Executors.newScheduledThreadPool(3);
+        scheduler = Executors.newScheduledThreadPool(5);
 
         tracker = new MediaTracker(this);
         Image tamaImage = tamaManager.getTama().getImageIcon().getImage();
@@ -135,6 +135,11 @@ public class MyFrame extends JFrame {
             tamaManager.createPoop();
             SwingUtilities.invokeLater(this::repaint);
         }, 5, 5, TimeUnit.SECONDS);
+        
+        scheduler.scheduleAtFixedRate(() ->{
+        	tamaManager.move();
+        	SwingUtilities.invokeLater(this::repaint);
+        }, 0, 500, TimeUnit.MILLISECONDS);
 
         setVisible(true);
     }
@@ -160,7 +165,7 @@ public class MyFrame extends JFrame {
             // 똥 배열 비우기
             tamaManager.clean();
             
-            scheduler = Executors.newScheduledThreadPool(3);
+            scheduler = Executors.newScheduledThreadPool(5);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
                 SwingUtilities.invokeLater(this::repaint);
@@ -179,6 +184,10 @@ public class MyFrame extends JFrame {
                 tamaManager.createPoop();
                 SwingUtilities.invokeLater(this::repaint);
             }, 5, 5, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() ->{
+            	tamaManager.move();
+            	SwingUtilities.invokeLater(this::repaint);
+            }, 0, 500, TimeUnit.MILLISECONDS);
             repaint();
         } else {
             System.exit(0);
