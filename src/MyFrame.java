@@ -214,17 +214,17 @@ public class MyFrame extends JFrame {
             //배경
             g.drawImage(backgroundImage, 0, 50, 500, 550, null);
 
-            //똥을 우선적으로 그리게
-            for(Poop p: tamaManager.getPoops()) {
-                drawables.add((Drawable) p);
-            }
-            //똥->비석
+            //비석을 우선적으로 그리기
             for(Tombstone t: tamaManager.getTombstones()) {
                 drawables.add((Drawable) t);
             }
-            //똥->비석->캐릭터
+            //비석->똥
+            for(Poop p: tamaManager.getPoops()) {
+                drawables.add((Drawable) p);
+            }
+            //비석->똥->캐릭터
             drawables.add((Drawable) tamaManager.getTama());
-            //똥->비석->캐릭터->바
+            //비석->똥->캐릭터->바
             drawables.add((Drawable) tamaManager.getSatietyBar());
             drawables.add((Drawable) tamaManager.getFatigueBar());
             for(Drawable d: drawables) {
