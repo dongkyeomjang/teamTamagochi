@@ -1,5 +1,4 @@
 package src;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -45,9 +44,8 @@ public class TamaManager {
             myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
         }
     }
-    public void sleep(){
-        Random random= new Random();
-        tama.setFatigue(tama.getFatigue()-random.nextInt(4));
+    public void sleep(int fatigueReduction){
+        tama.setFatigue(tama.getFatigue() - fatigueReduction);
         if(tama.getFatigue() < 0){
             tama.setFatigue(0);
         }
@@ -57,27 +55,24 @@ public class TamaManager {
         // poop를 모두 제거
         poops.clear();
     }
+    //move에서 움직임을 url로 변경해서 url을 통한 변경을 위해 setImgURL을 거친 이미지 변경 
     public void levelUp(){
         tama.setLevel(tama.getLevel()+1);
         switch (tama.getLevel()){
             case 2:
-                tama.setImgIcon("src/img/tamagochiImg2.png");
-                System.out.println("레벨2");
+                tama.setImgURL("src/img/tamagochiImg2.png");
                 break;
             case 3:
-                tama.setImgIcon("src/img/tamagochiImg3.png");
-                System.out.println("레벨3");
+                tama.setImgURL("src/img/tamagochiImg3.png");
                 break;
             case 4:
-                tama.setImgIcon("src/img/tamagochiImg4.png");
-                System.out.println("레벨4");
+                tama.setImgURL("src/img/tamagochiImg4.png");
                 break;
             case 5:
-                tama.setImgIcon("src/img/tamagochiImg5.png");
-                System.out.println("레벨5");
+                tama.setImgURL("src/img/tamagochiImg5.png");
                 break;
             default:
-                tama.setImgIcon("src/img/tamagochiImg.png");
+                tama.setImgURL("src/img/tamagochiImg1.png");
                 break;
         }
         if(tama.getLevel()==6){
@@ -86,8 +81,8 @@ public class TamaManager {
     }
     public void createPoop(){
         // poop 생성
+    	
         Random random = new Random();
-        // 화면 크기에 맞추어 랜덤 좌표 생성 (예시: 화면 크기가 500x500)
         int x, y;
         int size = 50;
 
@@ -105,6 +100,7 @@ public class TamaManager {
 
         Poop poop = new Poop(x, y, size, "src/img/poopImg.png");
         poops.add(poop);
+        
         // 만약 poop가 10개라면, Tamagochi의 dieByPoop() 메소드 호출. 즉 poop이 10개가 되면 죽음.
         if(poops.size() >= 10){
             tombstones.add(tama.dieByPoop("똥독 올라 죽음", tombstones.size()));
@@ -112,6 +108,56 @@ public class TamaManager {
             myframe.gameOver("똥독 올라 죽음");
         }
     }
+    
+    public void move() {
+    	switch(tama.getLevel()) {
+    	case 1:
+    		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
+    			tama.setImgURL("src/img/tamagochiImg12.png");
+    		}else if(getTama().getImgURL()=="src/img/tamagochiImg12.png") {
+    			tama.setImgURL("src/img/tamagochiImg1.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 2:
+    		if(tama.getImgURL()=="src/img/tamagochiImg2.png") {
+    			tama.setImgURL("src/img/tamagochiImg22.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg22.png") {
+    			tama.setImgURL("src/img/tamagochiImg2.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 3:
+    		if(tama.getImgURL()=="src/img/tamagochiImg3.png") {
+    			tama.setImgURL("src/img/tamagochiImg32.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg32.png") {
+    			tama.setImgURL("src/img/tamagochiImg3.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 4:
+    		if(tama.getImgURL()=="src/img/tamagochiImg4.png") {
+    			tama.setImgURL("src/img/tamagochiImg42.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg42.png") {
+    			tama.setImgURL("src/img/tamagochiImg4.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 5:
+    		if(tama.getImgURL()=="src/img/tamagochiImg5.png") {
+    			tama.setImgURL("src/img/tamagochiImg52.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg52.png") {
+    			tama.setImgURL("src/img/tamagochiImg5.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;  
+    	}
+    	
+    	
+    	
+    }
+    
+    
     public void gettingHungry(){
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '10초'마다 포만감을 1씩 감소시킨다.
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
