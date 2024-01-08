@@ -80,7 +80,11 @@ public class MyFrame extends JFrame {
             	 
             	 sleepButton.setEnabled(false);
                  eatButton.setEnabled(false);
+<<<<<<< HEAD
 
+=======
+                 
+>>>>>>> a99c4c43746919fe144a99c05ab2e6070912ba79
                 // 랜덤 시간 후에 버튼을 다시 활성화
                 Timer timer = new Timer(randomTime, ev -> {
                     
@@ -106,7 +110,13 @@ public class MyFrame extends JFrame {
         
      
 
+<<<<<<< HEAD
 
+=======
+       
+            
+        
+>>>>>>> a99c4c43746919fe144a99c05ab2e6070912ba79
         eatButton.addActionListener(actionListener);
         sleepButton.addActionListener(actionListener);
         cleanButton.addActionListener(actionListener);
