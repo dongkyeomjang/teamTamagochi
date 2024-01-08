@@ -43,9 +43,8 @@ public class TamaManager {
             myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
         }
     }
-    public void sleep(){
-        Random random= new Random();
-        tama.setFatigue(tama.getFatigue()-random.nextInt(4));
+    public void sleep(int fatigueReduction){
+        tama.setFatigue(tama.getFatigue() - fatigueReduction);
         if(tama.getFatigue() < 0){
             tama.setFatigue(0);
         }
@@ -55,27 +54,24 @@ public class TamaManager {
         // poop를 모두 제거
         poops.clear();
     }
+    //move에서 움직임을 url로 변경해서 url을 통한 변경을 위해 setImgURL을 거친 이미지 변경 
     public void levelUp(){
         tama.setLevel(tama.getLevel()+1);
         switch (tama.getLevel()){
             case 2:
-                tama.setImgIcon("src/img/tamagochiImg2.png");
-                System.out.println("레벨2");
+                tama.setImgURL("src/img/tamagochiImg2.png");
                 break;
             case 3:
-                tama.setImgIcon("src/img/tamagochiImg3.png");
-                System.out.println("레벨3");
+                tama.setImgURL("src/img/tamagochiImg3.png");
                 break;
             case 4:
-                tama.setImgIcon("src/img/tamagochiImg4.png");
-                System.out.println("레벨4");
+                tama.setImgURL("src/img/tamagochiImg4.png");
                 break;
             case 5:
-                tama.setImgIcon("src/img/tamagochiImg5.png");
-                System.out.println("레벨5");
+                tama.setImgURL("src/img/tamagochiImg5.png");
                 break;
             default:
-                tama.setImgIcon("src/img/tamagochiImg.png");
+                tama.setImgURL("src/img/tamagochiImg1.png");
                 break;
         }
         if(tama.getLevel()==6){
@@ -110,6 +106,54 @@ public class TamaManager {
             tama.setImgIcon("src/img/tamaGhostImg.png");
             myframe.gameOver("똥독 올라 죽음");
         }
+    }
+    
+    public void move() {
+    	switch(tama.getLevel()) {
+    	case 1:
+    		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
+    			tama.setImgURL("src/img/tamagochiImg12.png");
+    		}else if(getTama().getImgURL()=="src/img/tamagochiImg12.png") {
+    			tama.setImgURL("src/img/tamagochiImg1.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 2:
+    		if(tama.getImgURL()=="src/img/tamagochiImg2.png") {
+    			tama.setImgURL("src/img/tamagochiImg22.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg22.png") {
+    			tama.setImgURL("src/img/tamagochiImg2.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 3:
+    		if(tama.getImgURL()=="src/img/tamagochiImg3.png") {
+    			tama.setImgURL("src/img/tamagochiImg32.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg32.png") {
+    			tama.setImgURL("src/img/tamagochiImg3.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 4:
+    		if(tama.getImgURL()=="src/img/tamagochiImg4.png") {
+    			tama.setImgURL("src/img/tamagochiImg42.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg42.png") {
+    			tama.setImgURL("src/img/tamagochiImg4.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;
+    	case 5:
+    		if(tama.getImgURL()=="src/img/tamagochiImg5.png") {
+    			tama.setImgURL("src/img/tamagochiImg52.png");
+    		}else if(tama.getImgURL()=="src/img/tamagochiImg52.png") {
+    			tama.setImgURL("src/img/tamagochiImg5.png");
+    		}
+    		tama.setImgIcon(tama.getImgURL());
+    		break;  
+    	}
+    	
+    	
+    	
     }
     
     

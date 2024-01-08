@@ -18,6 +18,7 @@ public class Tamagochi extends Drawable{
         this.level = 1;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.nickname = nickname;
+        this.imgURL = "src/img/tamagochiImg1.png";
     }
 
     public void display(Graphics g){
@@ -82,4 +83,13 @@ public class Tamagochi extends Drawable{
     public String getNickname() {
         return nickname;
     }
+
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+    
 }

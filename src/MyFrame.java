@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -37,19 +38,19 @@ public class MyFrame extends JFrame {
         }
 
         //밥 버튼
-        ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         eatButton = new JButton(eatButtonImg);
         eatButton.setBounds(35, 500, 90, 80);
         backgroundPanel.add(eatButton);
 
         //재우기 버튼
-        ImageIcon sleepButtonImg = new ImageIcon(new ImageIcon("src/img/sleepImg.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        ImageIcon sleepButtonImg = new ImageIcon(new ImageIcon("src/img/sleepImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         sleepButton = new JButton(sleepButtonImg);
         sleepButton.setBounds(210, 500, 90, 80);
         backgroundPanel.add(sleepButton);
 
         //똥 치우기 버튼
-        ImageIcon cleanButtonImg = new ImageIcon(new ImageIcon("src/img/cleanImg1.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+        ImageIcon cleanButtonImg = new ImageIcon(new ImageIcon("src/img/cleanImg1.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         cleanButton = new JButton(cleanButtonImg);
         cleanButton.setBounds(380, 500, 90, 80);
         backgroundPanel.add(cleanButton);
@@ -67,9 +68,31 @@ public class MyFrame extends JFrame {
                 repaint();
             }
             else if(e.getSource() == sleepButton){
-                tamaManager.sleep();
+                // 10초, 20초, 30초 중 랜덤 시간 선택
+                Random rand = new Random();
+                int[] times = {10000, 20000, 30000}; // 밀리초 단위
+                int randomTime = times[rand.nextInt(times.length)];
+                
+                // 랜덤 시간에 따른 피로도 감소
+                int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
+
+                tamaManager.sleep(fatigueReduction);
                 repaint();
-            }
+
+                // 버튼을 비활성화
+                eatButton.setEnabled(false);
+                sleepButton.setEnabled(false);
+
+                // 랜덤 시간 후에 버튼을 다시 활성화
+                Timer timer = new Timer(randomTime, ev -> {
+                    sleepButton.setEnabled(true);
+                    eatButton.setEnabled(true);
+                });
+                timer.setRepeats(false);
+                timer.start();            
+                }
+            
+            
             else if(e.getSource() == cleanButton){
                 tamaManager.clean();
                 repaint();
@@ -79,7 +102,7 @@ public class MyFrame extends JFrame {
         sleepButton.addActionListener(actionListener);
         cleanButton.addActionListener(actionListener);
 
-        scheduler = Executors.newScheduledThreadPool(3);
+        scheduler = Executors.newScheduledThreadPool(5);
 
         tracker = new MediaTracker(this);
         Image tamaImage = tamaManager.getTama().getImageIcon().getImage();
@@ -112,6 +135,11 @@ public class MyFrame extends JFrame {
             tamaManager.createPoop();
             SwingUtilities.invokeLater(this::repaint);
         }, 5, 5, TimeUnit.SECONDS);
+        
+        scheduler.scheduleAtFixedRate(() ->{
+        	tamaManager.move();
+        	SwingUtilities.invokeLater(this::repaint);
+        }, 0, 500, TimeUnit.MILLISECONDS);
 
         setVisible(true);
     }
@@ -137,7 +165,7 @@ public class MyFrame extends JFrame {
             // 똥 배열 비우기
             tamaManager.clean();
             
-            scheduler = Executors.newScheduledThreadPool(3);
+            scheduler = Executors.newScheduledThreadPool(5);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
                 SwingUtilities.invokeLater(this::repaint);
@@ -156,6 +184,10 @@ public class MyFrame extends JFrame {
                 tamaManager.createPoop();
                 SwingUtilities.invokeLater(this::repaint);
             }, 5, 5, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() ->{
+            	tamaManager.move();
+            	SwingUtilities.invokeLater(this::repaint);
+            }, 0, 500, TimeUnit.MILLISECONDS);
             repaint();
         } else {
             System.exit(0);
