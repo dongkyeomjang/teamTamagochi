@@ -141,10 +141,11 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() ->{
         	tamaManager.move();
         	SwingUtilities.invokeLater(this::repaint);
-        }, 0, 500, TimeUnit.MILLISECONDS);
+        }, 0, 5, TimeUnit.SECONDS);
 
         setVisible(true);
     }
+    
     public void gameClear() {
         if (scheduler != null) {
             scheduler.shutdown();
@@ -156,7 +157,6 @@ public class MyFrame extends JFrame {
         if (scheduler != null) {
             scheduler.shutdown();
         }
-        repaint();
         // 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
         int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
         if (restart == JOptionPane.YES_OPTION) {
@@ -190,7 +190,7 @@ public class MyFrame extends JFrame {
             scheduler.scheduleAtFixedRate(() ->{
             	tamaManager.move();
             	SwingUtilities.invokeLater(this::repaint);
-            }, 0, 500, TimeUnit.MILLISECONDS);
+            }, 0, 5, TimeUnit.SECONDS);
             repaint();
         } else {
             System.exit(0);
@@ -234,5 +234,10 @@ public class MyFrame extends JFrame {
             drawables.clear();
         }
     }
+    
+    public boolean isSleepButtonEnabled() {
+        return sleepButton.isEnabled();
+    }
+    
 }
 

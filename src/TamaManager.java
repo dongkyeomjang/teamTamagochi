@@ -148,47 +148,49 @@ public class TamaManager {
     }
     
     public void move() {
-    	switch(tama.getLevel()) {
-    	case 1:
-    		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
-    			tama.setImgURL("src/img/tamagochiImg12.png");
-    		}else if(getTama().getImgURL()=="src/img/tamagochiImg12.png") {
-    			tama.setImgURL("src/img/tamagochiImg1.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 2:
-    		if(tama.getImgURL()=="src/img/tamagochiImg2.png") {
-    			tama.setImgURL("src/img/tamagochiImg22.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg22.png") {
-    			tama.setImgURL("src/img/tamagochiImg2.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 3:
-    		if(tama.getImgURL()=="src/img/tamagochiImg3.png") {
-    			tama.setImgURL("src/img/tamagochiImg32.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg32.png") {
-    			tama.setImgURL("src/img/tamagochiImg3.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 4:
-    		if(tama.getImgURL()=="src/img/tamagochiImg4.png") {
-    			tama.setImgURL("src/img/tamagochiImg42.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg42.png") {
-    			tama.setImgURL("src/img/tamagochiImg4.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 5:
-    		if(tama.getImgURL()=="src/img/tamagochiImg5.png") {
-    			tama.setImgURL("src/img/tamagochiImg52.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg52.png") {
-    			tama.setImgURL("src/img/tamagochiImg5.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;  
+    	if(tama.getSatiety() >= 5 && tama.getSatiety() <= 10 && tama.getFatigue() <= 10 && myframe.isSleepButtonEnabled()) {
+        	switch(tama.getLevel()) {
+        	case 1:
+        		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
+        			tama.setImgURL("src/img/tamagochiImg12.png");
+        		}else if(getTama().getImgURL()=="src/img/tamagochiImg12.png") {
+        			tama.setImgURL("src/img/tamagochiImg1.png");
+        		}
+        		tama.setImgIcon(tama.getImgURL());
+        		break;
+        	case 2:
+        		if(tama.getImgURL()=="src/img/tamagochiImg2.png") {
+        			tama.setImgURL("src/img/tamagochiImg22.png");
+        		}else if(tama.getImgURL()=="src/img/tamagochiImg22.png") {
+        			tama.setImgURL("src/img/tamagochiImg2.png");
+        		}
+        		tama.setImgIcon(tama.getImgURL());
+        		break;
+        	case 3:
+        		if(tama.getImgURL()=="src/img/tamagochiImg3.png") {
+        			tama.setImgURL("src/img/tamagochiImg32.png");
+        		}else if(tama.getImgURL()=="src/img/tamagochiImg32.png") {
+        			tama.setImgURL("src/img/tamagochiImg3.png");
+        		}
+        		tama.setImgIcon(tama.getImgURL());
+        		break;
+        	case 4:
+        		if(tama.getImgURL()=="src/img/tamagochiImg4.png") {
+        			tama.setImgURL("src/img/tamagochiImg42.png");
+        		}else if(tama.getImgURL()=="src/img/tamagochiImg42.png") {
+        			tama.setImgURL("src/img/tamagochiImg4.png");
+        		}
+        		tama.setImgIcon(tama.getImgURL());
+        		break;
+        	case 5:
+        		if(tama.getImgURL()=="src/img/tamagochiImg5.png") {
+        			tama.setImgURL("src/img/tamagochiImg52.png");
+        		}else if(tama.getImgURL()=="src/img/tamagochiImg52.png") {
+        			tama.setImgURL("src/img/tamagochiImg5.png");
+        		}
+        		tama.setImgIcon(tama.getImgURL());
+        		break;  
+        	}
     	}
     }
     
