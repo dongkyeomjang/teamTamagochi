@@ -77,9 +77,10 @@ public class MyFrame extends JFrame {
             	int[] times = {10000, 20000, 30000}; // 밀리초 단위
             	 int randomTime = times[rand.nextInt(times.length)];
                 // 버튼을 비활성화
-            	
+            	 
             	 sleepButton.setEnabled(false);
                  eatButton.setEnabled(false);
+                 
                 // 랜덤 시간 후에 버튼을 다시 활성화
                 Timer timer = new Timer(randomTime, ev -> {
                     
@@ -88,7 +89,7 @@ public class MyFrame extends JFrame {
 
                     tamaManager.sleep(fatigueReduction);
                     repaint();
-                 
+                    
                     sleepButton.setEnabled(true);
                     eatButton.setEnabled(true);
                 });
@@ -153,7 +154,7 @@ public class MyFrame extends JFrame {
 
         setVisible(true);
     }
-   
+
 	public void gameClear() {
         if (scheduler != null) {
             scheduler.shutdown();
