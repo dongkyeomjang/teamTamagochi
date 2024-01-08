@@ -60,19 +60,15 @@ public class TamaManager {
         switch (tama.getLevel()){
             case 2:
                 tama.setImgURL("src/img/tamagochiImg2.png");
-                System.out.println("레벨2");
                 break;
             case 3:
                 tama.setImgURL("src/img/tamagochiImg3.png");
-                System.out.println("레벨3");
                 break;
             case 4:
                 tama.setImgURL("src/img/tamagochiImg4.png");
-                System.out.println("레벨4");
                 break;
             case 5:
                 tama.setImgURL("src/img/tamagochiImg5.png");
-                System.out.println("레벨5");
                 break;
             default:
                 tama.setImgURL("src/img/tamagochiImg1.png");
@@ -115,19 +111,14 @@ public class TamaManager {
     public void move() {
     	switch(tama.getLevel()) {
     	case 1:
-    		System.out.println("1감지");
     		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
     			tama.setImgURL("src/img/tamagochiImg12.png");
-    			System.out.println("변경");
     		}else if(getTama().getImgURL()=="src/img/tamagochiImg12.png") {
     			tama.setImgURL("src/img/tamagochiImg1.png");
-    			System.out.println("변경");
     		}
     		tama.setImgIcon(tama.getImgURL());
-    		System.out.println("1끝");
     		break;
     	case 2:
-    		System.out.println("2감지");
     		if(tama.getImgURL()=="src/img/tamagochiImg2.png") {
     			tama.setImgURL("src/img/tamagochiImg22.png");
     		}else if(tama.getImgURL()=="src/img/tamagochiImg22.png") {
@@ -136,7 +127,6 @@ public class TamaManager {
     		tama.setImgIcon(tama.getImgURL());
     		break;
     	case 3:
-    		System.out.println("3감지");
     		if(tama.getImgURL()=="src/img/tamagochiImg3.png") {
     			tama.setImgURL("src/img/tamagochiImg32.png");
     		}else if(tama.getImgURL()=="src/img/tamagochiImg32.png") {
@@ -145,7 +135,6 @@ public class TamaManager {
     		tama.setImgIcon(tama.getImgURL());
     		break;
     	case 4:
-    		System.out.println("4감지");
     		if(tama.getImgURL()=="src/img/tamagochiImg4.png") {
     			tama.setImgURL("src/img/tamagochiImg42.png");
     		}else if(tama.getImgURL()=="src/img/tamagochiImg42.png") {
@@ -154,7 +143,6 @@ public class TamaManager {
     		tama.setImgIcon(tama.getImgURL());
     		break;
     	case 5:
-    		System.out.println("5감지");
     		if(tama.getImgURL()=="src/img/tamagochiImg5.png") {
     			tama.setImgURL("src/img/tamagochiImg52.png");
     		}else if(tama.getImgURL()=="src/img/tamagochiImg52.png") {
