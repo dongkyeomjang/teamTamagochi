@@ -149,7 +149,9 @@ public class MyFrame extends JFrame {
 
         setVisible(true);
     }
-
+    public boolean isSleepButtonEnabled() {
+        return sleepButton.isEnabled();
+    }
 	public void gameClear() {
         if (scheduler != null) {
             scheduler.shutdown();
@@ -223,12 +225,13 @@ public class MyFrame extends JFrame {
             for(Tombstone t: tamaManager.getTombstones()) {
                 drawables.add((Drawable) t);
             }
-            //비석->똥
+            //비석->케릭터
+            drawables.add((Drawable) tamaManager.getTama());
+            
+            //비석->케릭터->똥(머리위만 올라감)
             for(Poop p: tamaManager.getPoops()) {
                 drawables.add((Drawable) p);
             }        
-            //비석->똥->캐릭터
-            drawables.add((Drawable) tamaManager.getTama());
             //비석->똥->캐릭터->바
             drawables.add((Drawable) tamaManager.getSatietyBar());
             drawables.add((Drawable) tamaManager.getFatigueBar());

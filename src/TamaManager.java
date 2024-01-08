@@ -173,8 +173,11 @@ public class TamaManager {
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '20초'마다 피로도를 1씩 증가시킨다.
         // 만약 피로도가 10이 넘어가면, 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
         // 피로도가 15에 도달하면 그냥 dieBySleep() 호출. 즉 피로도가 15가 되면 죽음.
-        tama.setFatigue(tama.getFatigue() + 1);
-        fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
+        // 잠자기 버튼이 활성화되어 있을 때만 피로도를 증가시키기.
+        if (myframe.isSleepButtonEnabled()) {
+            tama.setFatigue(tama.getFatigue() + 1);
+            fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
+        }
         if (tama.getFatigue() >= 10) {
             if (tama.getFatigue() == 15) {
                 tombstones.add(tama.dieBySleep("과로", tombstones.size()));
