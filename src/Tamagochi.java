@@ -29,15 +29,10 @@ public class Tamagochi extends Drawable{
     public Tombstone dieByEat(String causeOfDeath, int tombstoneNum){
         return switch (tombstoneNum) {
             case 0 -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath, nickname);
-           
             case 1 -> new Tombstone(110, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath, nickname);
-           
             case 2 -> new Tombstone(202, 250, 110, "src/img/tombstoneImg1.png", causeOfDeath, nickname);
-            
             case 3 -> new Tombstone(294, 280, 110, "src/img/tombstoneImg1.png", causeOfDeath, nickname);
-            
             case 4 -> new Tombstone(374, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath, nickname);
-            
             default -> new Tombstone(30, 350, 110, "src/img/tombstoneImg1.png", causeOfDeath, nickname);
         };
     }

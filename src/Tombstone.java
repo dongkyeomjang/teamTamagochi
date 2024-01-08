@@ -14,10 +14,10 @@ public class Tombstone extends Drawable{
         
         g.setColor(Color.BLACK);
         g.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        g.drawString("이름: " +nickname, getX() + 28, getY() + 30);
+        g.drawString("이름: " +nickname, getX() + 27, getY() + 30);
         
         g.setColor(Color.BLACK);
-        g.drawString("사인: " +causeOfDeath , getX() + 28, getY() + 45);
+        g.drawString("사인: " +causeOfDeath  , getX() + 27, getY() + 45);
  
     }
     
