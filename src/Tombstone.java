@@ -20,8 +20,5 @@ public class Tombstone extends Drawable{
         g.drawString("사인: " +causeOfDeath  , getX() + 27, getY() + 45);
  
     }
-    
    
-    
-    
 }

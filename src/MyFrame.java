@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
 public class MyFrame extends JFrame {
     private MediaTracker tracker;
     private ScheduledExecutorService scheduler;
@@ -17,6 +16,7 @@ public class MyFrame extends JFrame {
     private JLabel nameLabel;
     private TamaManager tamaManager;
     private ActionListener actionListener;
+    
 
     public MyFrame(){
         super();
@@ -163,45 +163,52 @@ public class MyFrame extends JFrame {
         if (scheduler != null) {
             scheduler.shutdown();
         }
-        // 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
-        int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
-        if (restart == JOptionPane.YES_OPTION) {
-            // 게임 재시작. 닉네임 재설정
-            String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
-            tamaManager.createTama(nickname);
-            nameLabel.setText(nickname);
-
-            // 똥 배열 비우기
-            tamaManager.clean();
+        if(tamaManager.getTombstones().size() <= 5) {
+        	// 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
+        	int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
+        	if (restart == JOptionPane.YES_OPTION) {
+        		if (tamaManager.getTombstones().size() <=5) {
+        			// 게임 재시작. 닉네임 재설정
+                    String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+                    tamaManager.createTama(nickname);
+                    nameLabel.setText(nickname);
+    
+                    // 똥 배열 비우기
+                    tamaManager.clean();
             
-            scheduler = Executors.newScheduledThreadPool(5);
-            scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.levelUp();
-                SwingUtilities.invokeLater(this::repaint);
-            },60,60, TimeUnit.SECONDS);
-            scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.gettingHungry();
+                    scheduler = Executors.newScheduledThreadPool(5);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.levelUp();
+                    	SwingUtilities.invokeLater(this::repaint);
+                    },60,60, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.gettingHungry();
 
-                SwingUtilities.invokeLater(this::repaint);
-            }, 10, 10, TimeUnit.SECONDS);
-            scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.gettingSleepy();
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 10, 10, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.gettingSleepy();
 
-                SwingUtilities.invokeLater(this::repaint);
-            }, 20, 20, TimeUnit.SECONDS);
-            scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.createPoop();
-                SwingUtilities.invokeLater(this::repaint);
-            }, 5, 5, TimeUnit.SECONDS);
-            scheduler.scheduleAtFixedRate(() ->{
-            	tamaManager.move();
-            	SwingUtilities.invokeLater(this::repaint);
-            }, 0, 500, TimeUnit.MILLISECONDS);
-            repaint();
-        } else {
-            System.exit(0);
-        }
-    }
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 20, 20, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.createPoop();
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 5, 5, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() ->{
+                    	tamaManager.move();
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 0, 500, TimeUnit.MILLISECONDS);
+            
+                    repaint();
+        		}
+        	}	
+        }else {
+	   JOptionPane.showMessageDialog(null, " 목숨을 모두 소진했습니다! 게임을 종료합니다. \n 사인: "+causeOfDeath , "게임 종료", JOptionPane.INFORMATION_MESSAGE);
+	   System.exit(0);       
+    }         
+}
+    
 
 
     class BackgroundPanel extends JPanel {

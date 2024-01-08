@@ -167,8 +167,16 @@ public class TamaManager {
             tombstones.add(tama.dieByEat("아사", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
             myframe.gameOver("배고파서 죽음");
+        }else if (tama.getSatiety()<4) {
+        	if(Math.random()<0.4) {
+        		tombstones.add(tama.dieByEat("아사", tombstones.size()));
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver("배고파서 죽음");
+                }
+        	}
+        	
         }
-    }
+    
     public void gettingSleepy() {
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '20초'마다 피로도를 1씩 증가시킨다.
         // 만약 피로도가 10이 넘어가면, 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
@@ -197,6 +205,9 @@ public class TamaManager {
         return poops;
     }
     public ArrayList<Tombstone> getTombstones(){
+    	//if(tombstones.size()>5) {
+    		//System.exit(0);
+    	//}
         return tombstones;
     }
     public SatietyBar getSatietyBar(){
