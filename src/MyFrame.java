@@ -132,23 +132,22 @@ public class MyFrame extends JFrame {
         },60,60, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
-            SwingUtilities.invokeLater(this::repaint);
-        }, 2, 2, TimeUnit.SECONDS);
 
+            SwingUtilities.invokeLater(this::repaint);
+        }, 10, 10, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingSleepy();
-            SwingUtilities.invokeLater(this::repaint);
-        }, 3, 3, TimeUnit.SECONDS);
 
+            SwingUtilities.invokeLater(this::repaint);
+        }, 20, 20, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.createPoop();
             SwingUtilities.invokeLater(this::repaint);
         }, 5, 5, TimeUnit.SECONDS);
-        
         scheduler.scheduleAtFixedRate(() ->{
-        	tamaManager.move();
-        	SwingUtilities.invokeLater(this::repaint);
-        }, 0, 1, TimeUnit.SECONDS);
+            tamaManager.move();
+            SwingUtilities.invokeLater(this::repaint);
+        }, 0, 500, TimeUnit.MILLISECONDS);
 
         setVisible(true);
     }
@@ -192,8 +191,8 @@ public class MyFrame extends JFrame {
             }, 5, 5, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() ->{
             	tamaManager.move();
-            	SwingUtilities.invokeLater(this::repaint);
-            }, 0, 1, TimeUnit.SECONDS);
+                SwingUtilities.invokeLater(this::repaint);
+            }, 0, 500, TimeUnit.MILLISECONDS);
             repaint();
 		}else {
 			System.exit(0);
