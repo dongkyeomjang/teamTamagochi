@@ -141,7 +141,7 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() ->{
         	tamaManager.move();
         	SwingUtilities.invokeLater(this::repaint);
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
 
         setVisible(true);
     }
@@ -190,7 +190,7 @@ public class MyFrame extends JFrame {
             scheduler.scheduleAtFixedRate(() ->{
             	tamaManager.move();
             	SwingUtilities.invokeLater(this::repaint);
-            }, 0, 5, TimeUnit.SECONDS);
+            }, 0, 1, TimeUnit.SECONDS);
             repaint();
         } else {
             System.exit(0);

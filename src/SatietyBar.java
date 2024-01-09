@@ -6,6 +6,6 @@ public class SatietyBar extends Drawable {
     }
     public void display(Graphics g) {
         Image img = this.imgIcon.getImage();
-        g.drawImage(img, getX(), getY(), 125, 20, null);
+        g.drawImage(img, getX(), getY(), 125, 100, null);
     }
 }
