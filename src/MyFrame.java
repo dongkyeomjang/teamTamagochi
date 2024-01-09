@@ -142,7 +142,7 @@ public class MyFrame extends JFrame {
             tamaManager.gettingSleepy();
 
             SwingUtilities.invokeLater(this::repaint);
-        }, 15, 15, TimeUnit.SECONDS);
+        }, 20, 20, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.createPoop();
             SwingUtilities.invokeLater(this::repaint);
@@ -185,7 +185,7 @@ public class MyFrame extends JFrame {
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.gettingSleepy();
             	SwingUtilities.invokeLater(this::repaint);
-            }, 15, 15, TimeUnit.SECONDS);
+            }, 20, 20, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.createPoop();
             	SwingUtilities.invokeLater(this::repaint);
