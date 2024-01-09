@@ -206,6 +206,7 @@ public class MyFrame extends JFrame {
         if (scheduler != null) {
             scheduler.shutdown();
         }
+        repaint();
         if(tamaManager.getTombstones().size() <= 5) {
         	// 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
         	int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
