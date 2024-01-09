@@ -165,6 +165,14 @@ public class MyFrame extends JFrame {
         if (restart == JOptionPane.YES_OPTION) {
             // 게임 재시작. 닉네임 재설정
             String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+            
+            if(nickname == null) {
+                System.exit(1);
+            }
+            while (nickname.trim().isEmpty()) {
+            	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+            	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+            }
             tamaManager.createTama(nickname);
             nameLabel.setText(nickname);
 

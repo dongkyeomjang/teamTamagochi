@@ -201,7 +201,7 @@ public class TamaManager {
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
         tama.setSatiety(tama.getSatiety()-1);
         satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
-        if(tama.getSatiety() <= 4 && !myframe.isSleepButtonEnabled()) {
+        if(tama.getSatiety() <= 4) {
             switch(tama.getLevel()){
         	case 1: tama.setImgIcon("src/img/tama1_hungry.png");
         	break;
