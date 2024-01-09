@@ -23,6 +23,9 @@ public class MyFrame extends JFrame {
 
         setSize(515, 630);
         setLayout(new GridBagLayout()); // 레이아웃 매니저 변경
+        
+        setLocationRelativeTo(null); // 화면 가운데 배치
+        setResizable(false); // 창 크기 고정
 
         BackgroundPanel backgroundPanel = new BackgroundPanel("src/img/backgroundImg.png"); // 여기에 원하는 이미지 경로 입력
         backgroundPanel.setLayout(null);
@@ -126,12 +129,12 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
             SwingUtilities.invokeLater(this::repaint);
-        }, 10, 10, TimeUnit.SECONDS);
+        }, 2, 2, TimeUnit.SECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingSleepy();
             SwingUtilities.invokeLater(this::repaint);
-        }, 20, 20, TimeUnit.SECONDS);
+        }, 3, 3, TimeUnit.SECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.createPoop();
@@ -177,12 +180,12 @@ public class MyFrame extends JFrame {
                 tamaManager.gettingHungry();
 
                 SwingUtilities.invokeLater(this::repaint);
-            }, 10, 10, TimeUnit.SECONDS);
+            }, 2, 2, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.gettingSleepy();
 
                 SwingUtilities.invokeLater(this::repaint);
-            }, 20, 20, TimeUnit.SECONDS);
+            }, 3, 3, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.createPoop();
                 SwingUtilities.invokeLater(this::repaint);

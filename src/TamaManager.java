@@ -19,7 +19,7 @@ public class TamaManager {
     }
     public void createTama(String nickname){
         int x=200, y=310, size=110;
-        tama = new Tamagochi(x, y, size, "src/img/tamagochiImg.png", nickname);
+        tama = new Tamagochi(x, y, size, "src/img/tamagochiImg1.png", nickname);
         satietyBar = new SatietyBar(350, 100, 110, "src/img/Satiety"+tama.getSatiety()+".png");
         fatigueBar = new FatigueBar(350, 130, 110, "src/img/Fatigue"+tama.getFatigue()+".png");
     }
@@ -46,7 +46,7 @@ public class TamaManager {
         }
         else if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
             switch(tama.getLevel()){
-        	case 1: tama.setImgIcon("src/img/tamagochiImg.png");
+        	case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
         	break;
         	case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
         	break;
@@ -73,15 +73,17 @@ public class TamaManager {
     public void sleep(int fatigueReduction){
         tama.setFatigue(tama.getFatigue() - fatigueReduction);
         
-        switch(tama.getLevel()){
-    	case 1: tama.setImgIcon("src/img/tama1_sleeping.png");
-    	break;
-    	case 2: tama.setImgIcon("src/img/tama2_sleeping.png");
-    	break;
-    	case 3: tama.setImgIcon("src/img/tama3_sleeping.png");
-    	break;
-    	case 4: tama.setImgIcon("src/img/tama4_sleeping.png");
-    	break;
+        if(myframe.isSleepButtonEnabled()) {
+            switch(tama.getLevel()){
+        	case 1: tama.setImgIcon("src/img/tama1_sleeping.png");
+        	break;
+        	case 2: tama.setImgIcon("src/img/tama2_sleeping.png");
+        	break;
+        	case 3: tama.setImgIcon("src/img/tama3_sleeping.png");
+        	break;
+        	case 4: tama.setImgIcon("src/img/tama4_sleeping.png");
+        	break;
+            }
         }
         
         if(tama.getFatigue() < 0){
@@ -199,7 +201,7 @@ public class TamaManager {
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
         tama.setSatiety(tama.getSatiety()-1);
         satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
-        if(tama.getSatiety() <= 4) {
+        if(tama.getSatiety() <= 4 && !myframe.isSleepButtonEnabled()) {
             switch(tama.getLevel()){
         	case 1: tama.setImgIcon("src/img/tama1_hungry.png");
         	break;
@@ -213,7 +215,7 @@ public class TamaManager {
         }
         else if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
             switch(tama.getLevel()){
-        	case 1: tama.setImgIcon("src/img/tamagochiImg.png");
+        	case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
         	break;
         	case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
         	break;
