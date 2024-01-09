@@ -179,6 +179,9 @@ public class MyFrame extends JFrame {
             // 똥 배열 비우기
             tamaManager.clean();
             
+            sleepButton.setEnabled(true);
+            eatButton.setEnabled(true);
+            
             scheduler = Executors.newScheduledThreadPool(5);
             scheduler.scheduleAtFixedRate(() -> {
                 tamaManager.levelUp();
