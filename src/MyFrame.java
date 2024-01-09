@@ -23,8 +23,9 @@ public class MyFrame extends JFrame {
 
         setSize(515, 630);
         setLayout(new GridBagLayout()); // 레이아웃 매니저 변경
-        setLocationRelativeTo(null);
-        setResizable(false);
+        
+        setLocationRelativeTo(null); // 화면 가운데 배치
+        setResizable(false); // 창 크기 고정
 
         BackgroundPanel backgroundPanel = new BackgroundPanel("src/img/backgroundImg.png"); // 여기에 원하는 이미지 경로 입력
         backgroundPanel.setLayout(null);
@@ -130,12 +131,12 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
             SwingUtilities.invokeLater(this::repaint);
-        }, 10, 10, TimeUnit.SECONDS);
+        }, 2, 2, TimeUnit.SECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingSleepy();
             SwingUtilities.invokeLater(this::repaint);
-        }, 20, 20, TimeUnit.SECONDS);
+        }, 3, 3, TimeUnit.SECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.createPoop();
@@ -145,7 +146,7 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() ->{
         	tamaManager.move();
         	SwingUtilities.invokeLater(this::repaint);
-        }, 0, 500, TimeUnit.MILLISECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
 
         setVisible(true);
     }
@@ -167,7 +168,9 @@ public class MyFrame extends JFrame {
 
             // 똥 배열 비우기
             tamaManager.clean();
-    
+            sleepButton.setEnabled(true);
+            eatButton.setEnabled(true);
+            
             scheduler = Executors.newScheduledThreadPool(5);
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.levelUp();
@@ -175,12 +178,10 @@ public class MyFrame extends JFrame {
             },60,60, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.gettingHungry();
-
             	SwingUtilities.invokeLater(this::repaint);
             }, 10, 10, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.gettingSleepy();
-
             	SwingUtilities.invokeLater(this::repaint);
             }, 20, 20, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
@@ -190,8 +191,7 @@ public class MyFrame extends JFrame {
             scheduler.scheduleAtFixedRate(() ->{
             	tamaManager.move();
             	SwingUtilities.invokeLater(this::repaint);
-            }, 0, 500, TimeUnit.MILLISECONDS);
-    
+            }, 0, 1, TimeUnit.SECONDS);
             repaint();
 		}else {
 			System.exit(0);

@@ -19,7 +19,7 @@ public class TamaManager {
     }
     public void createTama(String nickname){
         int x=200, y=310, size=110;
-        tama = new Tamagochi(x, y, size, "src/img/tamagochiImg.png", nickname);
+        tama = new Tamagochi(x, y, size, "src/img/tamagochiImg1.png", nickname);
         satietyBar = new SatietyBar(350, 100, 110, "src/img/Satiety"+tama.getSatiety()+".png");
         fatigueBar = new FatigueBar(350, 130, 110, "src/img/Fatigue"+tama.getFatigue()+".png");
     }
@@ -31,6 +31,20 @@ public class TamaManager {
                 tombstones.add(tama.dieByEat("체함", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
                 myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
+            }
+        }
+        else if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
+            switch(tama.getLevel()){
+        	case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
+        	break;
+        	case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
+        	break;
+        	case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
+        	break;
+        	case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
+        	break;
+        	case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+        	break;
             }
         }
         //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
@@ -45,6 +59,19 @@ public class TamaManager {
     }
     public void sleep(int fatigueReduction){
         tama.setFatigue(tama.getFatigue() - fatigueReduction);
+        
+        if(myframe.isSleepButtonEnabled()) {
+            switch(tama.getLevel()){
+        	case 1: tama.setImgIcon("src/img/tama1_sleeping.png");
+        	break;
+        	case 2: tama.setImgIcon("src/img/tama2_sleeping.png");
+        	break;
+        	case 3: tama.setImgIcon("src/img/tama3_sleeping.png");
+        	break;
+        	case 4: tama.setImgIcon("src/img/tama4_sleeping.png");
+        	break;
+            }
+        }
         if(tama.getFatigue() < 0){
             tama.setFatigue(0);
         }
@@ -163,6 +190,35 @@ public class TamaManager {
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
         tama.setSatiety(tama.getSatiety()-1);
         satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
+        if (myframe.isSleepButtonEnabled()) {
+            if(tama.getSatiety() <= 4) {
+                switch(tama.getLevel()){
+                    case 1: tama.setImgIcon("src/img/tama1_hungry.png");
+                    break;
+                    case 2: tama.setImgIcon("src/img/tama2_hungry.png");
+                    break;
+                    case 3: tama.setImgIcon("src/img/tama3_hungry.png");
+                    break;
+                    case 4: tama.setImgIcon("src/img/tama4_hungry.png");
+                    break;
+                }
+            }
+            if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
+                switch(tama.getLevel()){
+               case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
+               break;
+               case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
+               break;
+               case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
+               break;
+               case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
+               break;
+               case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+               break;
+                }
+            }
+        }
+        
         if(tama.getSatiety() <= 0){
             tombstones.add(tama.dieByEat("아사", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
