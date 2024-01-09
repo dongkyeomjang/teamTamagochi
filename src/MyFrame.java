@@ -156,8 +156,49 @@ public class MyFrame extends JFrame {
         if (scheduler != null) {
             scheduler.shutdown();
         }
-        JOptionPane.showMessageDialog(null, "축하합니다! 게임을 클리어했습니다!", "게임 클리어", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
+        String[] options = {"재도전", "닫기"};
+        int clear = JOptionPane.showOptionDialog(null, "축하합니다! 게임을 클리어했습니다! \n 다시 시작하시겠습니까?", "게임 클리어",   JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,null,
+                options,
+                options[0]);
+        if(clear == JOptionPane.YES_OPTION) {
+        	String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+            tamaManager.createTama(nickname);
+            nameLabel.setText(nickname);
+
+            // 똥 배열 비우기
+            tamaManager.clean();
+    
+            scheduler = Executors.newScheduledThreadPool(5);
+            scheduler.scheduleAtFixedRate(() -> {
+            	tamaManager.levelUp();
+            	SwingUtilities.invokeLater(this::repaint);
+            },60,60, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() -> {
+            	tamaManager.gettingHungry();
+
+            	SwingUtilities.invokeLater(this::repaint);
+            }, 10, 10, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() -> {
+            	tamaManager.gettingSleepy();
+
+            	SwingUtilities.invokeLater(this::repaint);
+            }, 20, 20, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() -> {
+            	tamaManager.createPoop();
+            	SwingUtilities.invokeLater(this::repaint);
+            }, 5, 5, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(() ->{
+            	tamaManager.move();
+            	SwingUtilities.invokeLater(this::repaint);
+            }, 0, 500, TimeUnit.MILLISECONDS);
+    
+            repaint();
+		}else {
+			System.exit(0);
+		}
+        
+        
+        
     }
     public void gameOver(String causeOfDeath) {
         if (scheduler != null) {
@@ -202,7 +243,10 @@ public class MyFrame extends JFrame {
             
                     repaint();
         		}
-        	}	
+        	}
+        if(restart == JOptionPane.NO_OPTION) {
+        	System.exit(0); 
+        }
         }else {
 	   JOptionPane.showMessageDialog(null, " 목숨을 모두 소진했습니다! 게임을 종료합니다. \n 사인: "+causeOfDeath , "게임 종료", JOptionPane.INFORMATION_MESSAGE);
 	   System.exit(0);       
