@@ -26,8 +26,18 @@ public class TamaManager {
     public void feed(){
         Random random= new Random();
         // 만약 포만감이 11이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
-
+        
         if(tama.getSatiety() >= 11){
+            switch(tama.getLevel()){
+	        	case 1: tama.setImgIcon("src/img/tama1_full.png");
+	        	break;
+	        	case 2: tama.setImgIcon("src/img/tama2_full.png");
+	        	break;
+	        	case 3: tama.setImgIcon("src/img/tama3_full.png");
+	        	break;
+	        	case 4: tama.setImgIcon("src/img/tama4_full.png");
+	        	break;
+	        }
         	if(Math.random() < 0.4) {
                 tombstones.add(tama.dieByEat("체함", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
@@ -50,7 +60,6 @@ public class TamaManager {
     public void sleep(int fatigueReduction){
         tama.setFatigue(tama.getFatigue() - fatigueReduction);
         
-        if(myframe.isSleepButtonEnabled()) {
             switch(tama.getLevel()){
         	case 1: tama.setImgIcon("src/img/tama1_sleeping.png");
         	break;
@@ -61,15 +70,13 @@ public class TamaManager {
         	case 4: tama.setImgIcon("src/img/tama4_sleeping.png");
         	break;
             }
-        }
+            
         if(tama.getFatigue() < 0){
             tama.setFatigue(0);
         }
         fatigueBar.setImgIcon("src/img/Fatigue"+tama.getFatigue()+".png");
-        
-    
-       
     }
+    
     public void clean(){
         // poop를 모두 제거
         poops.clear();
@@ -129,47 +136,49 @@ public class TamaManager {
     }
     
     public void move() {
-    	switch(tama.getLevel()) {
-    	case 1:
-    		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
-    			tama.setImgURL("src/img/tamagochiImg12.png");
-    		}else if(getTama().getImgURL()=="src/img/tamagochiImg12.png") {
-    			tama.setImgURL("src/img/tamagochiImg1.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 2:
-    		if(tama.getImgURL()=="src/img/tamagochiImg2.png") {
-    			tama.setImgURL("src/img/tamagochiImg22.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg22.png") {
-    			tama.setImgURL("src/img/tamagochiImg2.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 3:
-    		if(tama.getImgURL()=="src/img/tamagochiImg3.png") {
-    			tama.setImgURL("src/img/tamagochiImg32.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg32.png") {
-    			tama.setImgURL("src/img/tamagochiImg3.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 4:
-    		if(tama.getImgURL()=="src/img/tamagochiImg4.png") {
-    			tama.setImgURL("src/img/tamagochiImg42.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg42.png") {
-    			tama.setImgURL("src/img/tamagochiImg4.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;
-    	case 5:
-    		if(tama.getImgURL()=="src/img/tamagochiImg5.png") {
-    			tama.setImgURL("src/img/tamagochiImg52.png");
-    		}else if(tama.getImgURL()=="src/img/tamagochiImg52.png") {
-    			tama.setImgURL("src/img/tamagochiImg5.png");
-    		}
-    		tama.setImgIcon(tama.getImgURL());
-    		break;  
+    	if(tama.getSatiety() >= 5 && tama.getSatiety() <= 10 && tama.getFatigue() <= 10 && myframe.isSleepButtonEnabled()) {
+	    	switch(tama.getLevel()) {
+	    	case 1:
+	    		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
+	    			tama.setImgURL("src/img/tamagochiImg12.png");
+	    		}else if(getTama().getImgURL()=="src/img/tamagochiImg12.png") {
+	    			tama.setImgURL("src/img/tamagochiImg1.png");
+	    		}
+	    		tama.setImgIcon(tama.getImgURL());
+	    		break;
+	    	case 2:
+	    		if(tama.getImgURL()=="src/img/tamagochiImg2.png") {
+	    			tama.setImgURL("src/img/tamagochiImg22.png");
+	    		}else if(tama.getImgURL()=="src/img/tamagochiImg22.png") {
+	    			tama.setImgURL("src/img/tamagochiImg2.png");
+	    		}
+	    		tama.setImgIcon(tama.getImgURL());
+	    		break;
+	    	case 3:
+	    		if(tama.getImgURL()=="src/img/tamagochiImg3.png") {
+	    			tama.setImgURL("src/img/tamagochiImg32.png");
+	    		}else if(tama.getImgURL()=="src/img/tamagochiImg32.png") {
+	    			tama.setImgURL("src/img/tamagochiImg3.png");
+	    		}
+	    		tama.setImgIcon(tama.getImgURL());
+	    		break;
+	    	case 4:
+	    		if(tama.getImgURL()=="src/img/tamagochiImg4.png") {
+	    			tama.setImgURL("src/img/tamagochiImg42.png");
+	    		}else if(tama.getImgURL()=="src/img/tamagochiImg42.png") {
+	    			tama.setImgURL("src/img/tamagochiImg4.png");
+	    		}
+	    		tama.setImgIcon(tama.getImgURL());
+	    		break;
+	    	case 5:
+	    		if(tama.getImgURL()=="src/img/tamagochiImg5.png") {
+	    			tama.setImgURL("src/img/tamagochiImg52.png");
+	    		}else if(tama.getImgURL()=="src/img/tamagochiImg52.png") {
+	    			tama.setImgURL("src/img/tamagochiImg5.png");
+	    		}
+	    		tama.setImgIcon(tama.getImgURL());
+	    		break;  
+	    	}
     	}
     }
     	
@@ -181,7 +190,7 @@ public class TamaManager {
         tama.setSatiety(tama.getSatiety()-1);
         satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
         if (myframe.isSleepButtonEnabled()) {
-            if(tama.getSatiety() <= 4) {
+            if(tama.getSatiety() < 5) {
                 switch(tama.getLevel()){
                     case 1: tama.setImgIcon("src/img/tama1_hungry.png");
                     break;
@@ -193,19 +202,20 @@ public class TamaManager {
                     break;
                 }
             }
-            if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
+            
+            if(tama.getSatiety() > 4 && tama.getSatiety() <= 10) {
                 switch(tama.getLevel()){
-               case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
-               break;
-               case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
-               break;
-               case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
-               break;
-               case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
-               break;
-               case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
-               break;
-                }
+    	           case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
+    	           break;
+    	           case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
+    	           break;
+    	           case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
+    	           break;
+    	           case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
+    	           break;
+    	           case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+    	           break;
+    	        }
             }
         }
         
@@ -220,19 +230,28 @@ public class TamaManager {
                 myframe.gameOver("배고파서 죽음");
                 }
         	}
-        	
         }
     
     public void gettingSleepy() {
         // 시스템은 tama의 createTime과 현재 시간을 비교하여 시간의 경과를 측정하고, '20초'마다 피로도를 1씩 증가시킨다.
-        // 만약 피로도가 10이 넘어가면, 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
+        // 만약 피로도가 11 이상부터 일정 확률로 Tamagochi의 dieBySleep() 메소드 호출.
         // 피로도가 15에 도달하면 그냥 dieBySleep() 호출. 즉 피로도가 15가 되면 죽음.
         // 잠자기 버튼이 활성화되어 있을 때만 피로도를 증가시키기.
         if (myframe.isSleepButtonEnabled()) {
             tama.setFatigue(tama.getFatigue() + 1);
             fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
         }
-        if (tama.getFatigue() >= 10) {
+        if (tama.getFatigue() >= 11) {
+            switch(tama.getLevel()){
+	        	case 1: tama.setImgIcon("src/img/tama1_sleepy.png");
+	        	break;
+	        	case 2: tama.setImgIcon("src/img/tama2_sleepy.png");
+	        	break;
+	        	case 3: tama.setImgIcon("src/img/tama3_sleepy.png");
+	        	break;
+	        	case 4: tama.setImgIcon("src/img/tama4_sleepy.png");
+	        	break;
+	        }
             if (tama.getFatigue() == 15) {
                 tombstones.add(tama.dieBySleep("과로", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
