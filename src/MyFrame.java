@@ -76,23 +76,22 @@ public class MyFrame extends JFrame {
             	// 10초, 20초, 30초 중 랜덤 시간 선택
                 Random rand = new Random();
             	int[] times = {10000, 20000, 30000}; // 밀리초 단위
-            	 int randomTime = times[rand.nextInt(times.length)];
-                // 버튼을 비활성화
-            	 
+            	int randomTime = times[rand.nextInt(times.length)];
+            	
+            	// 랜덤 시간에 따른 피로도 감소
+                int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
+
+                tamaManager.sleep(fatigueReduction);
+                repaint();
+            	
+            	// 버튼을 비활성화            	 
             	 sleepButton.setEnabled(false);
                  eatButton.setEnabled(false);
-
+             	
                 // 랜덤 시간 후에 버튼을 다시 활성화
-                Timer timer = new Timer(randomTime, ev -> {
-                    
-                    // 랜덤 시간에 따른 피로도 감소
-                    int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
-
-                    tamaManager.sleep(fatigueReduction);
-                    repaint();
-                    
+                Timer timer = new Timer(randomTime, ev -> {  
                     sleepButton.setEnabled(true);
-                    eatButton.setEnabled(true);
+                    eatButton.setEnabled(true);             
                 });
                 timer.setRepeats(false);
                 timer.start();            

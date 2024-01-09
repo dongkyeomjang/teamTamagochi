@@ -4,3 +4,4 @@ public class Main {
         myframe.setDefaultCloseOperation(MyFrame.EXIT_ON_CLOSE);
     }
 }
+

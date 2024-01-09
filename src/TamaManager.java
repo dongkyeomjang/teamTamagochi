@@ -64,9 +64,7 @@ public class TamaManager {
             tama.setFatigue(0);
         }
         fatigueBar.setImgIcon("src/img/Fatigue"+tama.getFatigue()+".png");
-        
-    
-       
+                 
     }
     public void clean(){
         // poop를 모두 제거
@@ -74,7 +72,7 @@ public class TamaManager {
     }
     //move에서 움직임을 url로 변경해서 url을 통한 변경을 위해 setImgURL을 거친 이미지 변경 
     public void levelUp(){
-        tama.setLevel(tama.getLevel()+1);
+        tama.setLevel(tama.getLevel()+1);      
         switch (tama.getLevel()){
             case 2:
                 tama.setImgURL("src/img/tamagochiImg2.png");
@@ -127,6 +125,7 @@ public class TamaManager {
     }
     
     public void move() {
+    	if(tama.getSatiety() > 4 && tama.getSatiety() < 11 && tama.getFatigue() < 11 && myframe.isSleepButtonEnabled()) {
     	switch(tama.getLevel()) {
     	case 1:
     		if(tama.getImgURL()=="src/img/tamagochiImg1.png") {
@@ -168,6 +167,7 @@ public class TamaManager {
     		}
     		tama.setImgIcon(tama.getImgURL());
     		break;  
+    		}
     	}
     }
     	
@@ -230,7 +230,17 @@ public class TamaManager {
             tama.setFatigue(tama.getFatigue() + 1);
             fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
         }
-        if (tama.getFatigue() >= 10) {
+        if (tama.getFatigue() > 10) {
+            switch(tama.getLevel()){
+           case 1: tama.setImgIcon("src/img/tama1_sleepy.png");
+           break;
+           case 2: tama.setImgIcon("src/img/tama2_sleepy.png");
+           break;
+           case 3: tama.setImgIcon("src/img/tama3_sleepy.png");
+           break;
+           case 4: tama.setImgIcon("src/img/tama4_sleepy.png");
+           break;
+            }
             if (tama.getFatigue() == 15) {
                 tombstones.add(tama.dieBySleep("과로", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
