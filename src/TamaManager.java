@@ -201,30 +201,32 @@ public class TamaManager {
         // 만약 포만감이 0이 되면, Tamagochi의 dieByEat() 메소드 호출. 즉 배고픔이 0이 되면 죽음.
         tama.setSatiety(tama.getSatiety()-1);
         satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
-        if(tama.getSatiety() <= 4) {
-            switch(tama.getLevel()){
-        	case 1: tama.setImgIcon("src/img/tama1_hungry.png");
-        	break;
-        	case 2: tama.setImgIcon("src/img/tama2_hungry.png");
-        	break;
-        	case 3: tama.setImgIcon("src/img/tama3_hungry.png");
-        	break;
-        	case 4: tama.setImgIcon("src/img/tama4_hungry.png");
-        	break;
+        if (myframe.isSleepButtonEnabled()) {
+            if(tama.getSatiety() <= 4) {
+                switch(tama.getLevel()){
+                    case 1: tama.setImgIcon("src/img/tama1_hungry.png");
+                    break;
+                    case 2: tama.setImgIcon("src/img/tama2_hungry.png");
+                    break;
+                    case 3: tama.setImgIcon("src/img/tama3_hungry.png");
+                    break;
+                    case 4: tama.setImgIcon("src/img/tama4_hungry.png");
+                    break;
+                }
             }
-        }
-        else if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
-            switch(tama.getLevel()){
-        	case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
-        	break;
-        	case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
-        	break;
-        	case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
-        	break;
-        	case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
-        	break;
-        	case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
-        	break;
+            if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
+                switch(tama.getLevel()){
+               case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
+               break;
+               case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
+               break;
+               case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
+               break;
+               case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
+               break;
+               case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+               break;
+                }
             }
         }
         
