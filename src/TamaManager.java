@@ -25,12 +25,14 @@ public class TamaManager {
     }
     public void feed(){
         Random random= new Random();
-        // 만약 포만감이 10이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
+        // 만약 포만감이 11이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
 
-        if(tama.getSatiety()>=10 && Math.random() < 0.4){
-            tombstones.add(tama.dieByEat("체함", tombstones.size()));
-            tama.setImgIcon("src/img/tamaGhostImg.png");
-            myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
+        if(tama.getSatiety() >= 11){
+        	if(Math.random() < 0.4) {
+                tombstones.add(tama.dieByEat("체함", tombstones.size()));
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
+        	}
         }
 
         else{
