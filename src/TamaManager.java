@@ -25,17 +25,19 @@ public class TamaManager {
     }
     public void feed(){
         Random random= new Random();
-        // 만약 포만감이 11이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
-        
+        //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
+        tama.setSatiety(tama.getSatiety()+random.nextInt(3)+1);
+        satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
+        // 만약 포만감이 11이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.        
         if(tama.getSatiety() >= 11){
             switch(tama.getLevel()){
-	        	case 1: tama.setImgIcon("src/img/tama1_full.png");
+	        	case 1: tama.setImgURL("src/img/tama1_full.png");
 	        	break;
-	        	case 2: tama.setImgIcon("src/img/tama2_full.png");
+	        	case 2: tama.setImgURL("src/img/tama2_full.png");
 	        	break;
-	        	case 3: tama.setImgIcon("src/img/tama3_full.png");
+	        	case 3: tama.setImgURL("src/img/tama3_full.png");
 	        	break;
-	        	case 4: tama.setImgIcon("src/img/tama4_full.png");
+	        	case 4: tama.setImgURL("src/img/tama4_full.png");
 	        	break;
 	        }
         	if(Math.random() < 0.4) {
@@ -45,16 +47,27 @@ public class TamaManager {
         	}
         }
 
-        else{
-            //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
-            tama.setSatiety(tama.getSatiety()+random.nextInt(3)+1);
-            satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
-            // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
-            if(tama.getSatiety() >= 15) {
-                tombstones.add(tama.dieByEat("배터짐", tombstones.size()));
-                tama.setImgIcon("src/img/tamaGhostImg.png");
-                myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
+        else if(tama.getSatiety()>3 && tama.getSatiety()<11){
+            switch(tama.getLevel()){
+           case 1: tama.setImgURL("src/img/tamagochiImg1.png");
+           break;
+           case 2: tama.setImgURL("src/img/tamagochiImg2.png");
+           break;
+           case 3: tama.setImgURL("src/img/tamagochiImg3.png");
+           break;
+           case 4: tama.setImgURL("src/img/tamagochiImg4.png");
+           break;
+           case 5: tama.setImgURL("src/img/tamagochiImg5.png");
+           break;
             }
+        }
+        tama.setImgIcon(tama.getImgURL());
+
+        // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
+        if(tama.getSatiety() >= 15) {
+            tombstones.add(tama.dieByEat("배터짐", tombstones.size()));
+            tama.setImgIcon("src/img/tamaGhostImg.png");
+            myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
         }
     }
     public void sleep(int fatigueReduction){
@@ -194,31 +207,45 @@ public class TamaManager {
         if (myframe.isSleepButtonEnabled()) {
             if(tama.getSatiety() < 5) {
                 switch(tama.getLevel()){
-                    case 1: tama.setImgIcon("src/img/tama1_hungry.png");
+                    case 1: tama.setImgURL("src/img/tama1_hungry.png");
                     break;
-                    case 2: tama.setImgIcon("src/img/tama2_hungry.png");
+                    case 2: tama.setImgURL("src/img/tama2_hungry.png");
                     break;
-                    case 3: tama.setImgIcon("src/img/tama3_hungry.png");
+                    case 3: tama.setImgURL("src/img/tama3_hungry.png");
                     break;
-                    case 4: tama.setImgIcon("src/img/tama4_hungry.png");
+                    case 4: tama.setImgURL("src/img/tama4_hungry.png");
                     break;
                 }
+                
             }
             
-            if(tama.getSatiety() > 4 && tama.getSatiety() <= 10) {
+            else if(tama.getSatiety() > 4 && tama.getSatiety() <= 10) {
                 switch(tama.getLevel()){
-    	           case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
+    	           case 1: tama.setImgURL("src/img/tamagochiImg1.png");
     	           break;
-    	           case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
+    	           case 2: tama.setImgURL("src/img/tamagochiImg2.png");
     	           break;
-    	           case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
+    	           case 3: tama.setImgURL("src/img/tamagochiImg3.png");
     	           break;
-    	           case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
+    	           case 4: tama.setImgURL("src/img/tamagochiImg4.png");
     	           break;
-    	           case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+    	           case 5: tama.setImgURL("src/img/tamagochiImg5.png");
     	           break;
     	        }
             }
+            else if(tama.getSatiety() >10) {
+                switch(tama.getLevel()){
+                case 1: tama.setImgURL("src/img/tama1_full.png");
+                break;
+                case 2: tama.setImgURL("src/img/tama2_full.png");
+                break;
+                case 3: tama.setImgURL("src/img/tama3_full.png");
+                break;
+                case 4: tama.setImgURL("src/img/tama4_full.png");
+                break;
+            }
+            }
+            tama.setImgIcon(tama.getImgURL());
         }
         
         if(tama.getSatiety() <= 0){
@@ -241,9 +268,10 @@ public class TamaManager {
         // 잠자기 버튼이 활성화되어 있을 때만 피로도를 증가시키기.
         if (myframe.isSleepButtonEnabled()) {
             tama.setFatigue(tama.getFatigue() + 1);
+            fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
         }
 
-        if (tama.getFatigue() >= 11) {
+        if (tama.getFatigue() >= 6) {
             switch(tama.getLevel()){
 	        	case 1: tama.setImgIcon("src/img/tama1_sleepy.png");
 	        	break;
@@ -254,15 +282,16 @@ public class TamaManager {
 	        	case 4: tama.setImgIcon("src/img/tama4_sleepy.png");
 	        	break;
 	        }
-
-            if (tama.getFatigue() == 15) {
-                tombstones.add(tama.dieBySleep("과로", tombstones.size()));
-                tama.setImgIcon("src/img/tamaGhostImg.png");
-                myframe.gameOver("피곤에 찌들어 죽음");
-            } else if (Math.random() < 0.4) {
-                tombstones.add(tama.dieBySleep("수면 부족", tombstones.size()));
-                tama.setImgIcon("src/img/tamaGhostImg.png");
-                myframe.gameOver("피곤해서 죽음");
+            if(tama.getFatigue() >10) {
+            	if (tama.getFatigue() == 15) {
+            		tombstones.add(tama.dieBySleep("과로", tombstones.size()));
+            		tama.setImgIcon("src/img/tamaGhostImg.png");
+            		myframe.gameOver("피곤에 찌들어 죽음");
+            	} else if (Math.random() < 0.4) {
+            		tombstones.add(tama.dieBySleep("수면 부족", tombstones.size()));
+            		tama.setImgIcon("src/img/tamaGhostImg.png");
+            		myframe.gameOver("피곤해서 죽음");
+            	}
             }
         }
     }
