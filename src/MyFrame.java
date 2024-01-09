@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
 public class MyFrame extends JFrame {
     private MediaTracker tracker;
     private ScheduledExecutorService scheduler;
@@ -17,27 +16,30 @@ public class MyFrame extends JFrame {
     private JLabel nameLabel;
     private TamaManager tamaManager;
     private ActionListener actionListener;
+    
 
     public MyFrame(){
         super();
 
         setSize(515, 630);
         setLayout(new GridBagLayout()); // 레이아웃 매니저 변경
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         BackgroundPanel backgroundPanel = new BackgroundPanel("src/img/backgroundImg.png"); // 여기에 원하는 이미지 경로 입력
         backgroundPanel.setLayout(null);
 
         tamaManager = new TamaManager(this);
         String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+        tamaManager.createTama(nickname);
         if(nickname == null) {
             System.exit(1);
         }
-        while (nickname.trim().isEmpty()) {
-        	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
-        	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+        else if(nickname.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
         }
-
-        tamaManager.createTama(nickname);
+        
+        
 
         //밥 버튼
         ImageIcon eatButtonImg = new ImageIcon(new ImageIcon("src/img/eatImg.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
@@ -70,36 +72,38 @@ public class MyFrame extends JFrame {
                 repaint();
             }
             else if(e.getSource() == sleepButton){
-                // 10초, 20초, 30초 중 랜덤 시간 선택
+            	// 10초, 20초, 30초 중 랜덤 시간 선택
                 Random rand = new Random();
-                int[] times = {10000, 20000, 30000}; // 밀리초 단위
-                int randomTime = times[rand.nextInt(times.length)];
-                
-                // 랜덤 시간에 따른 피로도 감소
-                int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
-
-                tamaManager.sleep(fatigueReduction);
-                repaint();
-
+            	int[] times = {10000, 20000, 30000}; // 밀리초 단위
+            	 int randomTime = times[rand.nextInt(times.length)];
                 // 버튼을 비활성화
-                eatButton.setEnabled(false);
-                sleepButton.setEnabled(false);
+            	 
+            	 sleepButton.setEnabled(false);
+                 eatButton.setEnabled(false);
 
                 // 랜덤 시간 후에 버튼을 다시 활성화
                 Timer timer = new Timer(randomTime, ev -> {
+                    
+                    // 랜덤 시간에 따른 피로도 감소
+                    int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
+
+                    tamaManager.sleep(fatigueReduction);
+                    repaint();
+                    
                     sleepButton.setEnabled(true);
                     eatButton.setEnabled(true);
                 });
                 timer.setRepeats(false);
                 timer.start();            
                 }
-            
+            	
             
             else if(e.getSource() == cleanButton){
                 tamaManager.clean();
                 repaint();
             }
         };
+
         eatButton.addActionListener(actionListener);
         sleepButton.addActionListener(actionListener);
         cleanButton.addActionListener(actionListener);
@@ -141,62 +145,114 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() ->{
         	tamaManager.move();
         	SwingUtilities.invokeLater(this::repaint);
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 500, TimeUnit.MILLISECONDS);
 
         setVisible(true);
     }
-    
-    public void gameClear() {
-        if (scheduler != null) {
-            scheduler.shutdown();
-        }
-        JOptionPane.showMessageDialog(null, "축하합니다! 게임을 클리어했습니다!", "게임 클리어", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
+    public boolean isSleepButtonEnabled() {
+        return sleepButton.isEnabled();
     }
-    public void gameOver(String causeOfDeath) {
+	public void gameClear() {
         if (scheduler != null) {
             scheduler.shutdown();
         }
-        repaint();
-        // 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
-        int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
-        if (restart == JOptionPane.YES_OPTION) {
-            // 게임 재시작. 닉네임 재설정
-            String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+        String[] options = {"재도전", "닫기"};
+        int clear = JOptionPane.showOptionDialog(null, "축하합니다! 게임을 클리어했습니다! \n 다시 시작하시겠습니까?", "게임 클리어",   JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,null,
+                options,
+                options[0]);
+        if(clear == JOptionPane.YES_OPTION) {
+        	String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
             tamaManager.createTama(nickname);
             nameLabel.setText(nickname);
 
             // 똥 배열 비우기
             tamaManager.clean();
-            
+    
             scheduler = Executors.newScheduledThreadPool(5);
             scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.levelUp();
-                SwingUtilities.invokeLater(this::repaint);
+            	tamaManager.levelUp();
+            	SwingUtilities.invokeLater(this::repaint);
             },60,60, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.gettingHungry();
+            	tamaManager.gettingHungry();
 
-                SwingUtilities.invokeLater(this::repaint);
+            	SwingUtilities.invokeLater(this::repaint);
             }, 10, 10, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.gettingSleepy();
+            	tamaManager.gettingSleepy();
 
-                SwingUtilities.invokeLater(this::repaint);
+            	SwingUtilities.invokeLater(this::repaint);
             }, 20, 20, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
-                tamaManager.createPoop();
-                SwingUtilities.invokeLater(this::repaint);
+            	tamaManager.createPoop();
+            	SwingUtilities.invokeLater(this::repaint);
             }, 5, 5, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() ->{
             	tamaManager.move();
             	SwingUtilities.invokeLater(this::repaint);
-            }, 0, 5, TimeUnit.SECONDS);
+            }, 0, 500, TimeUnit.MILLISECONDS);
+    
             repaint();
-        } else {
-            System.exit(0);
-        }
+		}else {
+			System.exit(0);
+		}
+        
+        
+        
     }
+    public void gameOver(String causeOfDeath) {
+        if (scheduler != null) {
+            scheduler.shutdown();
+        }
+        if(tamaManager.getTombstones().size() <= 5) {
+        	// 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
+        	int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
+        	if (restart == JOptionPane.YES_OPTION) {
+        		if (tamaManager.getTombstones().size() <=5) {
+        			// 게임 재시작. 닉네임 재설정
+                    String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+                    tamaManager.createTama(nickname);
+                    nameLabel.setText(nickname);
+    
+                    // 똥 배열 비우기
+                    tamaManager.clean();
+            
+                    scheduler = Executors.newScheduledThreadPool(5);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.levelUp();
+                    	SwingUtilities.invokeLater(this::repaint);
+                    },60,60, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.gettingHungry();
+
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 10, 10, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.gettingSleepy();
+
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 20, 20, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() -> {
+                    	tamaManager.createPoop();
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 5, 5, TimeUnit.SECONDS);
+                    scheduler.scheduleAtFixedRate(() ->{
+                    	tamaManager.move();
+                    	SwingUtilities.invokeLater(this::repaint);
+                    }, 0, 500, TimeUnit.MILLISECONDS);
+            
+                    repaint();
+        		}
+        	}
+        if(restart == JOptionPane.NO_OPTION) {
+        	System.exit(0); 
+        }
+        }else {
+	   JOptionPane.showMessageDialog(null, " 목숨을 모두 소진했습니다! 게임을 종료합니다. \n 사인: "+causeOfDeath , "게임 종료", JOptionPane.INFORMATION_MESSAGE);
+	   System.exit(0);       
+    }         
+}
+    
 
 
     class BackgroundPanel extends JPanel {
@@ -220,12 +276,13 @@ public class MyFrame extends JFrame {
             for(Tombstone t: tamaManager.getTombstones()) {
                 drawables.add((Drawable) t);
             }
-            //비석->똥
+            //비석->케릭터
+            drawables.add((Drawable) tamaManager.getTama());
+            
+            //비석->케릭터->똥(머리위만 올라감)
             for(Poop p: tamaManager.getPoops()) {
                 drawables.add((Drawable) p);
             }        
-            //비석->똥->캐릭터
-            drawables.add((Drawable) tamaManager.getTama());
             //비석->똥->캐릭터->바
             drawables.add((Drawable) tamaManager.getSatietyBar());
             drawables.add((Drawable) tamaManager.getFatigueBar());
@@ -235,10 +292,5 @@ public class MyFrame extends JFrame {
             drawables.clear();
         }
     }
-    
-    public boolean isSleepButtonEnabled() {
-        return sleepButton.isEnabled();
-    }
-    
 }
 
