@@ -75,6 +75,7 @@ public class TamaManager {
             tama.setFatigue(0);
         }
         fatigueBar.setImgIcon("src/img/Fatigue"+tama.getFatigue()+".png");
+
     }
     
     public void clean(){
@@ -83,7 +84,7 @@ public class TamaManager {
     }
     //move에서 움직임을 url로 변경해서 url을 통한 변경을 위해 setImgURL을 거친 이미지 변경 
     public void levelUp(){
-        tama.setLevel(tama.getLevel()+1);
+        tama.setLevel(tama.getLevel()+1);      
         switch (tama.getLevel()){
             case 2:
                 tama.setImgURL("src/img/tamagochiImg2.png");
@@ -179,6 +180,7 @@ public class TamaManager {
 	    		tama.setImgIcon(tama.getImgURL());
 	    		break;  
 	    	}
+
     	}
     }
     	
@@ -239,8 +241,8 @@ public class TamaManager {
         // 잠자기 버튼이 활성화되어 있을 때만 피로도를 증가시키기.
         if (myframe.isSleepButtonEnabled()) {
             tama.setFatigue(tama.getFatigue() + 1);
-            fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
         }
+
         if (tama.getFatigue() >= 11) {
             switch(tama.getLevel()){
 	        	case 1: tama.setImgIcon("src/img/tama1_sleepy.png");
@@ -252,6 +254,7 @@ public class TamaManager {
 	        	case 4: tama.setImgIcon("src/img/tama4_sleepy.png");
 	        	break;
 	        }
+
             if (tama.getFatigue() == 15) {
                 tombstones.add(tama.dieBySleep("과로", tombstones.size()));
                 tama.setImgIcon("src/img/tamaGhostImg.png");
