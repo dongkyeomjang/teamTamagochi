@@ -26,35 +26,23 @@ public class TamaManager {
     public void feed(){
         Random random= new Random();
         // 만약 포만감이 10이상인 경우, 일정 확률로 Tamagochi의 dieByEat() 메소드 호출. 즉 배부른 상태에서 밥을 먹이면 일정확률로 죽음.
-        if(tama.getSatiety() >= 10){
-            if(Math.random() < 0.4){
-                tombstones.add(tama.dieByEat("체함", tombstones.size()));
-                tama.setImgIcon("src/img/tamaGhostImg.png");
-                myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
-            }
-        }
-        else if(tama.getSatiety() > 3 && tama.getSatiety() <= 10) {
-            switch(tama.getLevel()){
-        	case 1: tama.setImgIcon("src/img/tamagochiImg1.png");
-        	break;
-        	case 2: tama.setImgIcon("src/img/tamagochiImg2.png");
-        	break;
-        	case 3: tama.setImgIcon("src/img/tamagochiImg3.png");
-        	break;
-        	case 4: tama.setImgIcon("src/img/tamagochiImg4.png");
-        	break;
-        	case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
-        	break;
-            }
-        }
-        //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
-        tama.setSatiety(tama.getSatiety()+random.nextInt(3)+1);
-        satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
-        // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
-        if(tama.getSatiety() >= 15){
-            tombstones.add(tama.dieByEat("배터짐", tombstones.size()));
+
+        if(tama.getSatiety()>=10 && Math.random() < 0.4){
+            tombstones.add(tama.dieByEat("체함", tombstones.size()));
             tama.setImgIcon("src/img/tamaGhostImg.png");
-            myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
+            myframe.gameOver("배부른 상태에서 먹다가 체해서(운없어서) 죽음");
+        }
+
+        else{
+            //밥 먹임. 랜덤하게 1~3만큼 포만감 증가
+            tama.setSatiety(tama.getSatiety()+random.nextInt(3)+1);
+            satietyBar.setImgIcon("src/img/Satiety"+tama.getSatiety()+".png");
+            // 만약 포만감이 15를 초과했을 경우, Tamagochi의 dieByEat() 메소드 호출
+            if(tama.getSatiety() >= 15) {
+                tombstones.add(tama.dieByEat("배터짐", tombstones.size()));
+                tama.setImgIcon("src/img/tamaGhostImg.png");
+                myframe.gameOver("죽을때까지 먹다가 배터져 죽음");
+            }
         }
     }
     public void sleep(int fatigueReduction){
