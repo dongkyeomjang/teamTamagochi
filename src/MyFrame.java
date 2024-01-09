@@ -32,13 +32,16 @@ public class MyFrame extends JFrame {
 
         tamaManager = new TamaManager(this);
         String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
-        tamaManager.createTama(nickname);
+        
         if(nickname == null) {
             System.exit(1);
         }
-        else if(nickname.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        while (nickname.trim().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
         }
+        
+        tamaManager.createTama(nickname);
         
         
 
@@ -210,6 +213,15 @@ public class MyFrame extends JFrame {
         		if (tamaManager.getTombstones().size() <=5) {
         			// 게임 재시작. 닉네임 재설정
                     String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+                    
+                    if(nickname == null) {
+                        System.exit(1);
+                    }
+                    while (nickname.trim().isEmpty()) {
+                    	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+                    	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+                    }
+                    
                     tamaManager.createTama(nickname);
                     nameLabel.setText(nickname);
     
