@@ -115,7 +115,8 @@ public class TamaManager {
                 tama.setImgURL("src/img/tamagochiImg1.png");
                 break;
         }
-        if(tama.getLevel()==6){
+        // 다마고치 5레벨 달성시 게임 clear
+        if(tama.getLevel()==5){
             myframe.gameClear();
         }
     }
