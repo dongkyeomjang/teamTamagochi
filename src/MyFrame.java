@@ -132,7 +132,7 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.levelUp();
             SwingUtilities.invokeLater(this::repaint);
-        },60,60, TimeUnit.SECONDS);
+        }, 60, 60, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
 
@@ -158,8 +158,9 @@ public class MyFrame extends JFrame {
         return sleepButton.isEnabled();
     }
 	public void gameClear() {
-        if (scheduler != null) {
-            scheduler.shutdown();
+        if (scheduler != null) {            	
+        	scheduler.shutdown();   
+        	repaint();
         }
         String[] options = {"재도전", "닫기"};
         int clear = JOptionPane.showOptionDialog(null, "축하합니다! 게임을 클리어했습니다! \n 다시 시작하시겠습니까?", "게임 클리어",   JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,null,
@@ -173,11 +174,14 @@ public class MyFrame extends JFrame {
             // 똥 배열 비우기
             tamaManager.clean();
             
+            sleepButton.setEnabled(true);
+            eatButton.setEnabled(true);
+            
             scheduler = Executors.newScheduledThreadPool(5);
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.levelUp();
             	SwingUtilities.invokeLater(this::repaint);
-            },60,60, TimeUnit.SECONDS);
+            }, 60, 60, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.gettingHungry();
             	SwingUtilities.invokeLater(this::repaint);
@@ -199,7 +203,7 @@ public class MyFrame extends JFrame {
 			System.exit(0);
 		}
         
-        
+
         
     }
     public void gameOver(String causeOfDeath) {
@@ -237,17 +241,17 @@ public class MyFrame extends JFrame {
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.levelUp();
                     	SwingUtilities.invokeLater(this::repaint);
-                    },60,60, TimeUnit.SECONDS);
+                    },10,10, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.gettingHungry();
 
                     	SwingUtilities.invokeLater(this::repaint);
-                    },10, 10, TimeUnit.SECONDS);
+                    }, 2, 2, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.gettingSleepy();
 
                     	SwingUtilities.invokeLater(this::repaint);
-                    }, 20, 20, TimeUnit.SECONDS);
+                    }, 4, 4, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.createPoop();
                     	SwingUtilities.invokeLater(this::repaint);
@@ -256,7 +260,7 @@ public class MyFrame extends JFrame {
                     	tamaManager.move();
                     	SwingUtilities.invokeLater(this::repaint);
                     }, 500, 500, TimeUnit.MILLISECONDS);
-            
+                    
                     repaint();
         		}
         	}

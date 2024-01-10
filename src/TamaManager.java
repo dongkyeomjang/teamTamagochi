@@ -39,6 +39,8 @@ public class TamaManager {
 	        	break;
 	        	case 4: tama.setImgURL("src/img/tama4_full.png");
 	        	break;
+                case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+                break;
 	        }
         	if(Math.random() < 0.4) {
                 tombstones.add(tama.dieByEat("체함", tombstones.size()));
@@ -82,6 +84,8 @@ public class TamaManager {
         	break;
         	case 4: tama.setImgIcon("src/img/tama4_sleeping.png");
         	break;
+        	case 5: tama.setImgIcon("stc/img/tamagochiImg5.png");
+        	break;
             }
             
         if(tama.getFatigue() < 0){
@@ -97,8 +101,28 @@ public class TamaManager {
     }
     //move에서 움직임을 url로 변경해서 url을 통한 변경을 위해 setImgURL을 거친 이미지 변경 
     public void levelUp(){
-        tama.setLevel(tama.getLevel()+1);      
-        switch (tama.getLevel()){
+        tama.setLevel(tama.getLevel()+1);  
+        if(myframe.isSleepButtonEnabled()==false) {
+            switch (tama.getLevel()){
+            case 2:
+                tama.setImgURL("src/img/tama2_sleeping.png");
+                break;
+            case 3:
+                tama.setImgURL("src/img/tama3_sleeping.png");
+                break;
+            case 4:
+                tama.setImgURL("src/img/tama4_sleeping.png");
+                break;
+            case 5:
+                tama.setImgURL("src/img/tamagochiImg5.png");
+                break;
+            default:
+            	tama.setImgURL("src/img/tama1_sleeping.png");
+                break;
+            }
+        }
+        else if(myframe.isSleepButtonEnabled()==true) {
+            switch (tama.getLevel()){
             case 2:
                 tama.setImgURL("src/img/tamagochiImg2.png");
                 break;
@@ -114,7 +138,9 @@ public class TamaManager {
             default:
                 tama.setImgURL("src/img/tamagochiImg1.png");
                 break;
+            }
         }
+        tama.setImgIcon(tama.getImgURL());
         // 다마고치 5레벨 달성시 게임 clear
         if(tama.getLevel()==5){
             myframe.gameClear();
@@ -216,6 +242,8 @@ public class TamaManager {
                     break;
                     case 4: tama.setImgURL("src/img/tama4_hungry.png");
                     break;
+                    case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+                    break;
                 }
                 
             }
@@ -243,6 +271,8 @@ public class TamaManager {
                 case 3: tama.setImgURL("src/img/tama3_full.png");
                 break;
                 case 4: tama.setImgURL("src/img/tama4_full.png");
+                break;
+                case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
                 break;
             }
             }
@@ -282,6 +312,8 @@ public class TamaManager {
 	        	break;
 	        	case 4: tama.setImgIcon("src/img/tama4_sleepy.png");
 	        	break;
+                case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+                break;
 	        }
             // 배고프고 졸릴 때 (자고 있을 때 배가고파져 이미지 변경을 막기위해 버튼의 활성화 여부 도입) 
             if(tama.getSatiety()<5 && myframe.isSleepButtonEnabled()) {
@@ -294,6 +326,8 @@ public class TamaManager {
     	        	break;
     	        	case 4: tama.setImgIcon("src/img/tama4_hungry_sleepy.png");
     	        	break;
+                    case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+                    break;
     	        }
             }
             // 배부르고 졸릴 때 (자고 있을 때 배가고파져 이미지 변경을 막기위해 버튼의 활성화 여부 도입) 
@@ -307,6 +341,8 @@ public class TamaManager {
     	        	break;
     	        	case 4: tama.setImgIcon("src/img/tama4_full_sleepy.png");
     	        	break;
+                    case 5: tama.setImgIcon("src/img/tamagochiImg5.png");
+                    break;
     	        }
             }
             

@@ -7,7 +7,6 @@ public class Tamagochi extends Drawable{
     private int fatigue;
     private int level;
 
-    private Timestamp createTime;
     private String nickname;
     private String imgURL;
 
@@ -16,7 +15,6 @@ public class Tamagochi extends Drawable{
         this.satiety = 10;
         this.fatigue = 0;
         this.level = 1;
-        this.createTime = new Timestamp(System.currentTimeMillis());
         this.nickname = nickname;
         this.imgURL = "src/img/tamagochiImg1.png";
     }
@@ -77,9 +75,6 @@ public class Tamagochi extends Drawable{
     }
     public void setLevel(int level) {
         this.level = level;
-    }
-    public Timestamp getCreateTime() {
-        return createTime;
     }
     public String getNickname() {
         return nickname;
