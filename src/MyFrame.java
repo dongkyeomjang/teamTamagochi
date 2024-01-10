@@ -242,12 +242,12 @@ public class MyFrame extends JFrame {
                     	tamaManager.gettingHungry();
 
                     	SwingUtilities.invokeLater(this::repaint);
-                    }, 2, 2, TimeUnit.SECONDS);
+                    },10, 10, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.gettingSleepy();
 
                     	SwingUtilities.invokeLater(this::repaint);
-                    }, 3, 3, TimeUnit.SECONDS);
+                    }, 20, 20, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.createPoop();
                     	SwingUtilities.invokeLater(this::repaint);

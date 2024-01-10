@@ -270,8 +270,8 @@ public class TamaManager {
             tama.setFatigue(tama.getFatigue() + 1);
             fatigueBar.setImgIcon("src/img/Fatigue" + tama.getFatigue() + ".png");
         }
-
-        if (tama.getFatigue() >= 6) {
+        // 자고 있을 때 배가고파져 이미지 변경을 막기위해 버튼의 활성화 여부 도입
+        if (tama.getFatigue() >= 6 && myframe.isSleepButtonEnabled()) {
             switch(tama.getLevel()){
 	        	case 1: tama.setImgIcon("src/img/tama1_sleepy.png");
 	        	break;
@@ -282,6 +282,33 @@ public class TamaManager {
 	        	case 4: tama.setImgIcon("src/img/tama4_sleepy.png");
 	        	break;
 	        }
+            // 배고프고 졸릴 때 (자고 있을 때 배가고파져 이미지 변경을 막기위해 버튼의 활성화 여부 도입) 
+            if(tama.getSatiety()<5 && myframe.isSleepButtonEnabled()) {
+                switch(tama.getLevel()){
+    	        	case 1: tama.setImgIcon("src/img/tama1_hungry_sleepy.png");
+    	        	break;
+    	        	case 2: tama.setImgIcon("src/img/tama2_hungry_sleepy.png");
+    	        	break;
+    	        	case 3: tama.setImgIcon("src/img/tama3_hungry_sleepy.png");
+    	        	break;
+    	        	case 4: tama.setImgIcon("src/img/tama4_hungry_sleepy.png");
+    	        	break;
+    	        }
+            }
+            // 배부르고 졸릴 때 (자고 있을 때 배가고파져 이미지 변경을 막기위해 버튼의 활성화 여부 도입) 
+            else if(tama.getSatiety()>10 && myframe.isSleepButtonEnabled()) {
+                switch(tama.getLevel()){
+    	        	case 1: tama.setImgIcon("src/img/tama1_full_sleepy.png");
+    	        	break;
+    	        	case 2: tama.setImgIcon("src/img/tama2_full_sleepy.png");
+    	        	break;
+    	        	case 3: tama.setImgIcon("src/img/tama3_full_sleepy.png");
+    	        	break;
+    	        	case 4: tama.setImgIcon("src/img/tama4_full_sleepy.png");
+    	        	break;
+    	        }
+            }
+            
             if(tama.getFatigue() >10) {
             	if (tama.getFatigue() == 15) {
             		tombstones.add(tama.dieBySleep("과로", tombstones.size()));
