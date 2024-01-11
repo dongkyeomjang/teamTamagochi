@@ -1,5 +1,4 @@
 package src;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -34,13 +33,16 @@ public class MyFrame extends JFrame {
 
         tamaManager = new TamaManager(this);
         String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
-        tamaManager.createTama(nickname);
+        
         if(nickname == null) {
             System.exit(1);
         }
-        else if(nickname.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        while (nickname.trim().isEmpty()) {
+        	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+        	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
         }
+        
+        tamaManager.createTama(nickname);
         
         
 
@@ -78,27 +80,29 @@ public class MyFrame extends JFrame {
             	// 10초, 20초, 30초 중 랜덤 시간 선택
                 Random rand = new Random();
             	int[] times = {10000, 20000, 30000}; // 밀리초 단위
-            	 int randomTime = times[rand.nextInt(times.length)];
-                // 버튼을 비활성화
-            	 
+            	int randomTime = times[rand.nextInt(times.length)];
+
+            	
+            	// 랜덤 시간에 따른 피로도 감소
+                int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
+
+                tamaManager.sleep(fatigueReduction);
+                repaint();
+            	
+            	// 버튼을 비활성화            	 
             	 sleepButton.setEnabled(false);
                  eatButton.setEnabled(false);
+             	
 
                 // 랜덤 시간 후에 버튼을 다시 활성화
-                Timer timer = new Timer(randomTime, ev -> {
-                    
-                    // 랜덤 시간에 따른 피로도 감소
-                    int fatigueReduction = randomTime / 10000; // 1, 2 또는 3으로 설정
-
-                    tamaManager.sleep(fatigueReduction);
-                    repaint();
-                    
+                Timer timer = new Timer(randomTime, ev -> {  
                     sleepButton.setEnabled(true);
-                    eatButton.setEnabled(true);
+                    eatButton.setEnabled(true);             
                 });
+                
                 timer.setRepeats(false);
                 timer.start();            
-                }
+            }
             	
             
             else if(e.getSource() == cleanButton){
@@ -129,7 +133,7 @@ public class MyFrame extends JFrame {
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.levelUp();
             SwingUtilities.invokeLater(this::repaint);
-        },60,60, TimeUnit.SECONDS);
+        }, 60, 60, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(() -> {
             tamaManager.gettingHungry();
 
@@ -155,8 +159,9 @@ public class MyFrame extends JFrame {
         return sleepButton.isEnabled();
     }
 	public void gameClear() {
-        if (scheduler != null) {
-            scheduler.shutdown();
+        if (scheduler != null) {            	
+        	scheduler.shutdown();   
+        	repaint();
         }
         String[] options = {"재도전", "닫기"};
         int clear = JOptionPane.showOptionDialog(null, "축하합니다! 게임을 클리어했습니다! \n 다시 시작하시겠습니까?", "게임 클리어",   JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,null,
@@ -169,6 +174,7 @@ public class MyFrame extends JFrame {
 
             // 똥 배열 비우기
             tamaManager.clean();
+            
             sleepButton.setEnabled(true);
             eatButton.setEnabled(true);
             
@@ -176,7 +182,7 @@ public class MyFrame extends JFrame {
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.levelUp();
             	SwingUtilities.invokeLater(this::repaint);
-            },60,60, TimeUnit.SECONDS);
+            }, 60, 60, TimeUnit.SECONDS);
             scheduler.scheduleAtFixedRate(() -> {
             	tamaManager.gettingHungry();
             	SwingUtilities.invokeLater(this::repaint);
@@ -192,19 +198,20 @@ public class MyFrame extends JFrame {
             scheduler.scheduleAtFixedRate(() ->{
             	tamaManager.move();
                 SwingUtilities.invokeLater(this::repaint);
-            }, 0, 500, TimeUnit.MILLISECONDS);
+            }, 500, 500, TimeUnit.MILLISECONDS);
             repaint();
 		}else {
 			System.exit(0);
 		}
         
-        
+
         
     }
     public void gameOver(String causeOfDeath) {
         if (scheduler != null) {
             scheduler.shutdown();
         }
+        repaint();
         if(tamaManager.getTombstones().size() <= 5) {
         	// 게임 오버라는 메세지와, 재시작 버튼이 있는 팝업창을 띄워준다. 재시작 버튼을 누를 시, createTama를 호출한다.
         	int restart = JOptionPane.showConfirmDialog(null, "게임 오버! 다시 시작하시겠습니까?\n사인:"+causeOfDeath, "게임 오버", JOptionPane.YES_NO_OPTION);
@@ -212,27 +219,40 @@ public class MyFrame extends JFrame {
         		if (tamaManager.getTombstones().size() <=5) {
         			// 게임 재시작. 닉네임 재설정
                     String nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+                    
+                    if(nickname == null) {
+                        System.exit(1);
+                    }
+                    while (nickname.trim().isEmpty()) {
+                    	JOptionPane.showMessageDialog(null, "닉네임을 반드시 입력해야 합니다.", "경고", JOptionPane.WARNING_MESSAGE);
+                    	nickname = JOptionPane.showInputDialog("닉네임을 입력하세요");
+                    }
+                    
                     tamaManager.createTama(nickname);
                     nameLabel.setText(nickname);
     
                     // 똥 배열 비우기
                     tamaManager.clean();
+                    
+                    // 게임 재실행 후 버튼 활성화
+                    sleepButton.setEnabled(true);
+                    eatButton.setEnabled(true);
             
                     scheduler = Executors.newScheduledThreadPool(5);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.levelUp();
                     	SwingUtilities.invokeLater(this::repaint);
-                    },60,60, TimeUnit.SECONDS);
+                    },10,10, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.gettingHungry();
 
                     	SwingUtilities.invokeLater(this::repaint);
-                    }, 10, 10, TimeUnit.SECONDS);
+                    }, 2, 2, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.gettingSleepy();
 
                     	SwingUtilities.invokeLater(this::repaint);
-                    }, 20, 20, TimeUnit.SECONDS);
+                    }, 4, 4, TimeUnit.SECONDS);
                     scheduler.scheduleAtFixedRate(() -> {
                     	tamaManager.createPoop();
                     	SwingUtilities.invokeLater(this::repaint);
@@ -240,8 +260,8 @@ public class MyFrame extends JFrame {
                     scheduler.scheduleAtFixedRate(() ->{
                     	tamaManager.move();
                     	SwingUtilities.invokeLater(this::repaint);
-                    }, 0, 500, TimeUnit.MILLISECONDS);
-            
+                    }, 500, 500, TimeUnit.MILLISECONDS);
+                    
                     repaint();
         		}
         	}

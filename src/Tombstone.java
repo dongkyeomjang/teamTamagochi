@@ -1,5 +1,4 @@
 package src;
-
 import java.awt.*;
 
 public class Tombstone extends Drawable{
